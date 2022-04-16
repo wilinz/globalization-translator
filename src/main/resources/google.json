@@ -1,0 +1,46 @@
+[
+  [
+    [
+      "你好世界\n",
+      "hello world\n",
+      null,
+      null,
+      10,
+      null,
+      null,
+      null,
+      [
+        [
+          null,
+          true
+        ]
+      ]
+    ],
+    [
+      "你叫什么名字",
+      "what's your name",
+      null,
+      null,
+      10
+    ]
+  ],
+  null,
+  "en",
+  null,
+  null,
+  null,
+  1,
+  [],
+  [
+    [
+      "en"
+    ],
+    null,
+    [
+      1
+    ],
+    [
+      "en"
+    ]
+  ]
+]
