@@ -2,6 +2,7 @@ package com.wilinz.androidi18n
 
 import com.intellij.openapi.vfs.VirtualFile
 import com.wilinz.androidi18n.translator.GoogleTranslate
+import com.wilinz.androidi18n.translator.Translator
 import com.wilinz.androidi18n.util.Language
 import org.dom4j.Document
 import org.dom4j.DocumentHelper
@@ -12,79 +13,111 @@ import org.dom4j.io.XMLWriter
 import java.io.File
 import java.io.Reader
 
-
 class TranslateHandler(
     private val resourceDir: VirtualFile,
     private val documentReader: Reader,
     private val form: Language,
     private val to: List<Language>,
-    onTranslating: (index: Int, language: Language) -> Unit,
-    onSuccess: (index: Int, language: Language) -> Unit,
-    onError: (index: Int, language: Language, error: Exception) -> Unit,
+    private val onTranslating: ((index: Int, language: Language) -> Unit)? = null,
+    private val onSuccess: ((index: Int, language: Language) -> Unit)? = null,
+    private val onError: ((index: Int, language: Language, error: Throwable) -> Unit)? = null,
 ) {
 
-    init {
-        val reader = SAXReader()
-        val document = reader.read(documentReader)
-        val list = document.filterToTranslatableList()
-        to.forEachIndexed { index, toLanguage ->
-            try {
-                onTranslating(index, toLanguage)
-                val translateResult = GoogleTranslate().translateMultipleText(
-                    list.map { it.text },
-                    form.code,
-                    toLanguage.code
-                )
+    private val translator = GoogleTranslate()
+    private var isCancel = false
 
-                val languageDir = File(resourceDir.path, toLanguage.directoryName)
-                languageDir.mkdirs()
+    fun start() {
+        isCancel = false
+        val saxReader = SAXReader()
 
+        val result = translateXml(
+            translator,
+            oldDocument = saxReader.read(documentReader),
+            newDocument = { index, language ->
+                val languageDir = File(resourceDir.path, language.directoryName)
                 val stringsFile = File(languageDir, "strings.xml")
-
-                val newDocument = if (stringsFile.exists()) reader.read(stringsFile.inputStream())
-                else DocumentHelper.createDocument().apply { addElement("resources") }
-
-                val root = newDocument.rootElement
-
-                println(document.asXML())
-                println(newDocument.asXML())
-                translateResult.forEachIndexed { index, translateResult ->
-                    val translateElement = list[index]
-                    if (stringsFile.exists()) {
-//                        val oldNode = newDocument.selectSingleNode("/resources/string[@name='${name}']")
-                        val oldNode = root.elements().firstOrNull {
-                            (it as Element).getNameAttr() == translateElement.getNameAttr()
-                        } as Element?
-
-                        if (oldNode == null) {
-                            root.add(translateElement.createCopy().apply { text = translateResult.result })
-                        } else {
-                            oldNode.text = translateResult.result
-                        }
-                    } else {
-                        root.add(translateElement.createCopy().apply { text = translateResult.result })
-                    }
+                if (stringsFile.exists()) saxReader.read(stringsFile.inputStream()) else null
+            },
+            form = form,
+            to = to,
+            isCancel = isCancel,
+            onSuccess = { index, document, language ->
+                val languageDir = File(resourceDir.path, language.directoryName)
+                languageDir.mkdirs()
+                val stringsFile = File(languageDir, "strings.xml")
+                if (!stringsFile.exists()) stringsFile.createNewFile()
+                val xmlWriter = XMLWriter(stringsFile.outputStream(), OutputFormat.createPrettyPrint()).apply {
+                    isEscapeText = false
                 }
+                xmlWriter.write(document)
+                onSuccess?.invoke(index, language)
+            },
+            onTranslating = onTranslating,
+            onError = onError
+        )
+        println(result)
+    }
 
-                val writer = XMLWriter(stringsFile.outputStream(), OutputFormat.createPrettyPrint())
-                writer.write(newDocument)
-                onSuccess(index, toLanguage)
-            } catch (e: Exception) {
-                onError(index, toLanguage, e)
-                e.printStackTrace()
+
+    fun cancel() {
+        isCancel = true
+        translator.cancel()
+    }
+
+}
+
+fun translateXml(
+    translator: Translator,
+    oldDocument: Document,
+    newDocument: ((index: Int, Language) -> Document?)? = null,
+    form: Language,
+    to: List<Language>,
+    isCancel: Boolean=false,
+    onTranslating: ((index: Int, language: Language) -> Unit)? = null,
+    onSuccess: ((index: Int, Document, language: Language) -> Unit)? = null,
+    onError: ((index: Int, language: Language, error: Throwable) -> Unit)? = null,
+    onFinish: (() -> Unit)? = null
+) {
+    val list = oldDocument.filterToTranslatableList()
+    for (index in to.indices) {
+        if (isCancel) break
+        val toLanguage = to[index]
+        onTranslating?.invoke(index, toLanguage)
+        try {
+            val translateResult = translator.translate(
+                list.map { it.text },
+                form.code,
+                toLanguage.code
+            )
+            val newDocument1 = newDocument?.invoke(index, toLanguage) ?: DocumentHelper.createDocument()
+                .apply { addElement("resources") }
+            val root = newDocument1.rootElement
+            translateResult.forEachIndexed { index, translateResult ->
+                val translateElement = list[index]
+                if (newDocument1 != null) {
+                    val oldNode = root.elements().firstOrNull {
+                        (it as Element).getNameAttr() == translateElement.getNameAttr()
+                    } ?: translateElement.createCopy().also { root.add(it) }
+                    oldNode.text = translateResult
+                } else {
+                    root.add(translateElement.createCopy().apply { text = translateResult })
+                }
             }
-        }
-
-    }
-
-    private fun Document.filterToTranslatableList(): List<Element> {
-        return document.rootElement.elements().map {
-            (it as Element).createCopy()
-        }.filter {
-            return@filter it.attributeValue("translatable", "").toBooleanStrictOrNull() ?: true
+            onSuccess?.invoke(index, newDocument1, toLanguage)
+        } catch (e: Exception) {
+            onError?.invoke(index, toLanguage, e)
+        } finally {
+            onFinish?.invoke()
         }
     }
+}
 
+private fun Document.filterToTranslatableList(): List<Element> {
+    return document.rootElement.elements().map {
+        (it as Element).createCopy()
+    }.filter {
+        return@filter it.attributeValue("translatable", "").toBooleanStrictOrNull() ?: true
+    }
 }
 
 fun Element.getNameAttr(): String? {

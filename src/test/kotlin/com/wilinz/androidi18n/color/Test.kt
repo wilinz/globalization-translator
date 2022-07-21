@@ -1,14 +1,19 @@
 package com.wilinz.androidi18n.color
 
 import com.google.gson.Gson
+import com.wilinz.androidi18n.translateXml
 import com.wilinz.androidi18n.translator.GoogleTranslate
+import com.wilinz.androidi18n.util.Language
 import com.wilinz.androidi18n.util.LanguageUtil
 import org.dom4j.Element
 import org.dom4j.Node
+import org.dom4j.io.OutputFormat
 import org.dom4j.io.SAXReader
+import org.dom4j.io.XMLWriter
 import org.junit.Test
 import java.io.File
 import java.io.StringReader
+import java.util.*
 
 data class Data(val node: Node, val isSkip: Boolean)
 class Test {
@@ -66,8 +71,35 @@ class Test {
 
     @Test
     fun test4() {
-        val resultList = GoogleTranslate().translate("hello world\nwhat's your name", "auto", "zh-CN")
-        println(resultList)
+        val result = GoogleTranslate().translate(listOf("你好", "世界"), "zh-CN", "en")
+        println(result)
+    }
+
+    @Test
+    fun test5() {
+        val saxReader = SAXReader()
+        val document =
+            saxReader.read(File("C:\\Users\\wilinz\\StudioProjects\\AutoX\\app\\src\\main\\res\\values\\strings.xml"))
+        val result = translateXml(
+            translator = GoogleTranslate(),
+            oldDocument = document,
+            newDocument = null,
+            form = Language(code = "zh-CN"),
+            to = listOf(Language(code = "en")),
+            onSuccess = { index, document, language ->
+                val xmlWriter = XMLWriter(System.out, OutputFormat.createPrettyPrint()).apply { isEscapeText = false }
+                xmlWriter.write(document)
+            }
+        )
+        println(result)
+    }
+
+    @Test
+    fun test6(){
+        val language = Locale.getDefault().language
+        val region = Locale.getDefault().country
+        val localLanguageCode = "$language-$region"
+        println(localLanguageCode.contains("zh-CN"))
     }
 }
 

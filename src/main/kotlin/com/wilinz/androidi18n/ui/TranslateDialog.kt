@@ -25,6 +25,7 @@ import com.wilinz.androidi18n.util.Language
 import com.wilinz.androidi18n.util.LanguageUtil
 import java.io.FileNotFoundException
 import java.io.Reader
+import java.util.*
 import javax.swing.JComponent
 
 data class LanguageItem(
@@ -40,23 +41,31 @@ class TranslateDialog(private val actionEvent: AnActionEvent, private val docume
 
     private val resourceDir: VirtualFile
     private val language = mutableStateListOf<LanguageItem>().apply {
-            addAll(
-                LanguageUtil.languages.map {
-                    LanguageItem(
-                        it,
-                        false
-                    )
-                })
-        }
+        addAll(
+            LanguageUtil.languages.map {
+                LanguageItem(
+                    it,
+                    false
+                )
+            })
+    }
 
 
     init {
         val regex = Regex("^values.*$")
         val file = CommonDataKeys.VIRTUAL_FILE.getData(actionEvent.dataContext)
 
+        val language = Locale.getDefault().language
+        val region = Locale.getDefault().country
+        val localLanguageCode = "$language-$region"
+        println(localLanguageCode)
         sourceLanguage = mutableStateOf(
-            LanguageUtil.languages.firstOrNull { it.directoryName == file?.parent?.name }
-                ?: LanguageUtil.languageAuto
+            LanguageUtil.languages.firstOrNull {
+                it.directoryName == file?.parent?.name
+            } ?: LanguageUtil.languages.firstOrNull {
+                localLanguageCode.contains(it.code)
+            }
+            ?: LanguageUtil.languages.first { it.code == "en" }
         )
 
         resourceDir = file?.parent?.parent ?: throw FileNotFoundException("resource dir is not found")

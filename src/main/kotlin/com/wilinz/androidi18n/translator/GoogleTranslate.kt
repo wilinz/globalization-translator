@@ -1,63 +1,63 @@
 package com.wilinz.androidi18n.translator
 
-import com.wilinz.androidi18n.model.TranslateResult
-import com.wilinz.androidi18n.network.OkHttpConfig
-import com.wilinz.androidi18n.util.GoogleHttp
-import com.wilinz.androidi18n.util.token
+import com.wilinz.androidi18n.network.OkHttp
+import com.wilinz.androidi18n.util.*
+import okhttp3.Call
 import okhttp3.FormBody
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Request
 import org.json.JSONArray
 
-class GoogleTranslate {
+class GoogleTranslate : Translator {
 
-    companion object {
-        private const val url = "http://translate.google.com/translate_a/single"
-    }
+    private val url = "https://translate.googleapis.com/translate_a/t?anno=3&client=te&v=1.0&format=html"
 
-    fun translateMultipleText(multipleText: List<String>, from: String, to: String): List<TranslateResult> {
-        val translateResult = translate(multipleText.joinToString("\n"), from, to)
-        return translateResult.map { TranslateResult(it.src.trimEnd('\n'), it.result.trimEnd('\n')) }
-    }
+    private val callList = mutableListOf<Call>()
 
-    fun translate(text: String, from: String, to: String): List<TranslateResult> {
-        val tk = token(text)
-
-        val requestBody = FormBody.Builder()
-            .add("client", "webapp")
-            .add("sl", from)
-            .add("tl", to)
-            .add("hl", "zh-CN")
-            .add("dt", "t")
-            .add("ie", "UTF-8")//输入编码
-            .add("oe", "UTF-8")//输出编码
-            .add("source", "bh")
-            .add("tk", tk)
-//            .add("q", "text")
-            .add("q", text)
+    override fun translate(
+        queryList: List<String>,
+        from: String,
+        to: String
+    ): List<String> {
+        val queryList1 = queryList.map { it.escapeAndroidXml().addCodeTag() }
+        val tk = token(queryList1.joinToString(""))
+        val httpUrl = url.toHttpUrl().newBuilder()
+            .addQueryParameter("sl", from)
+            .addQueryParameter("tl", to)
+            .addQueryParameter("tk", tk)
             .build()
+        val formBody = FormBody.Builder().apply {
+            queryList1.forEach {
+                add("q", it)
+            }
+        }.build()
 
         val request = Request.Builder()
-            .url(url)
-            .addHeader("User-Agent", GoogleHttp.userAgent)
-            .post(requestBody)
+            .url(httpUrl)
+            .header("Content-Type", "application/x-www-form-urlencoded")
+            .post(formBody)
             .build()
-
-        val response = OkHttpConfig.okHttpClient.newCall(request).execute()
-        val respString = response.body?.string() ?: throw NullPointerException("response data is null")
-        val data = JSONArray(respString)
-
-        val translateResultList = mutableListOf<TranslateResult>()
-
-        for (result in data[0] as JSONArray) {
-            if (result is JSONArray) {
-                val translateResult = TranslateResult(
-                    result.getString(1),
-                    result.getString(0)
-                )
-                translateResultList.add(translateResult)
+        val call = OkHttp.client.newCall(request)
+        callList.add(call)
+        try {
+            val response = call.execute()
+            response.body?.string()?.let {
+                return JSONArray(it).map { result ->
+                    (result as String).converseResult().removeCodeTag().unescapeAndroidXml()
+                }
             }
+        } catch (e: Exception) {
+            throw e
+        } finally {
+            callList.remove(call)
         }
+        return emptyList()
+    }
 
-        return translateResultList
+    override fun cancel() {
+        callList.forEach {
+            if (!it.isCanceled()) it.cancel()
+        }
+        callList.clear()
     }
 }

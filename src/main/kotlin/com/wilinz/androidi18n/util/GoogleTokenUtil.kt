@@ -6,31 +6,9 @@ package com.wilinz.androidi18n.util
 /**
  * 计算tk值.
  */
+@OptIn(ExperimentalUnsignedTypes::class)
 fun token(text: String): String {
-    val a = mutableListOf<Long>()
-    var b = 0
-    while (b < text.length) {
-        var c = text[b].toInt()
-        if (128 > c) {
-            a += c.toLong()
-        } else {
-            if (2048 > c) {
-                a += (c shr 6 or 192).toLong()
-            } else {
-                if (55296 == (c and 64512) && b + 1 < text.length && 56320 == (text[b + 1].toInt() and 64512)) {
-                    c = 65536 + ((c and 1023) shl 10) + (text[++b].toInt() and 1023)
-                    a += (c shr 18 or 240).toLong()
-                    a += (c shr 12 and 63 or 128).toLong()
-                } else {
-                    a += (c shr 12 or 224).toLong()
-                }
-                a += (c shr 6 and 63 or 128).toLong()
-            }
-            a += (c and 63 or 128).toLong()
-        }
-
-        b++
-    }
+    val a = text.toByteArray().map { it.toUByte().toShort() }
 
     val d = 406644L
     val e = 3293161072L

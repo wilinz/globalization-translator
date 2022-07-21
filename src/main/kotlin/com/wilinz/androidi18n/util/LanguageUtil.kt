@@ -4,20 +4,14 @@ import com.google.gson.Gson
 
 
 data class Language(
-    val name: String,
+    val name: String="",
     val code: String,
-    val directoryName: String,
+    val directoryName: String="",
 )
 
 class Languages : ArrayList<Language>()
 
 object LanguageUtil {
-
-    val languageAuto = Language(
-        "自动识别",
-        "auto",
-        ""
-    )
 
     private var _languages: Languages? = null
 
@@ -30,7 +24,7 @@ object LanguageUtil {
         }
 
     val languagesWithAuto: List<Language>
-        get() = languages.toMutableList().apply { add(0, languageAuto) }
+        get() = languages
 
     private const val languagesJson = """[
   {

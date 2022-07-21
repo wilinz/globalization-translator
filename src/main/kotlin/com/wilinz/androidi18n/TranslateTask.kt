@@ -23,8 +23,11 @@ TranslateTask(
     title: @NlsContexts.ProgressTitle String
 ) :
     Task.Backgroundable(project, title) {
+
+    private var translateHandler: TranslateHandler? = null
+
     override fun run(indicator: ProgressIndicator) {
-        TranslateHandler(
+        translateHandler = TranslateHandler(
             resourceDir = resourceDir,
             documentReader = documentReader,
             form = form,
@@ -48,6 +51,14 @@ TranslateTask(
                 );
                 Notifications.Bus.notify(notification);
             }
-        )
+        ).apply {
+            start()
+        }
     }
+
+    override fun onCancel() {
+        translateHandler?.cancel()
+        super.onCancel()
+    }
+
 }
