@@ -17,9 +17,9 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.vfs.VirtualFile
-import com.wilinz.androidi18n.TranslateTask
-import com.wilinz.androidi18n.myPainterResource
+import com.wilinz.androidi18n.task.TranslateTask
 import com.wilinz.androidi18n.ui.theme.WidgetTheme
+import com.wilinz.androidi18n.ui.util.jarPainterResource
 import com.wilinz.androidi18n.ui.widgets.CheckboxWithLabel
 import com.wilinz.androidi18n.util.Language
 import com.wilinz.androidi18n.util.LanguageUtil
@@ -126,7 +126,7 @@ class TranslateDialog(private val actionEvent: AnActionEvent, private val docume
                     }) {
                         Text(sourceLanguage.value.name)
                         Icon(
-                            painter = myPainterResource("icons/more.svg"),
+                            painter = jarPainterResource("icons/more.svg"),
                             contentDescription = "more",
                             modifier = Modifier.size(24.dp)
                         )
@@ -136,7 +136,7 @@ class TranslateDialog(private val actionEvent: AnActionEvent, private val docume
                         onDismissRequest = { menuExpanded.value = false },
                         modifier = Modifier.background(MaterialTheme.colors.background)
                     ) {
-                        LanguageUtil.languagesWithAuto
+                        LanguageUtil.languages
                             .forEachIndexed { index, language ->
                                 DropdownMenuItem(onClick = {
                                     menuExpanded.value = false

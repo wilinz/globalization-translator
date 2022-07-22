@@ -1,4 +1,4 @@
-package com.wilinz.androidi18n
+package com.wilinz.androidi18n.ui.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -8,7 +8,7 @@ import androidx.compose.ui.res.painterResource
 import java.io.InputStream
 
 @OptIn(ExperimentalComposeUiApi::class)
-object MyResourceLoader : ResourceLoader {
+object JarResourceLoader : ResourceLoader {
     override fun load(resourcePath: String): InputStream {
         return this.javaClass.classLoader.getResourceAsStream(resourcePath)!!
     }
@@ -16,6 +16,6 @@ object MyResourceLoader : ResourceLoader {
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun myPainterResource(resourcePath: String): Painter {
-    return painterResource(resourcePath, MyResourceLoader)
+fun jarPainterResource(resourcePath: String): Painter {
+    return painterResource(resourcePath, JarResourceLoader)
 }

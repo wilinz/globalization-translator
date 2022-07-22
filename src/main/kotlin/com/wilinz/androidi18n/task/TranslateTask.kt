@@ -1,4 +1,4 @@
-package com.wilinz.androidi18n
+package com.wilinz.androidi18n.task
 
 import com.intellij.notification.NotificationDisplayType
 import com.intellij.notification.NotificationGroup
@@ -9,12 +9,12 @@ import com.intellij.openapi.progress.Task
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.NlsContexts
 import com.intellij.openapi.vfs.VirtualFile
+import com.wilinz.androidi18n.translator.AndroidXmlTranslator
+import com.wilinz.androidi18n.translator.Translator
 import com.wilinz.androidi18n.util.Language
 import java.io.Reader
 
-class
-
-TranslateTask(
+class TranslateTask(
     project: Project?,
     private val resourceDir: VirtualFile,
     private val documentReader: Reader,
@@ -24,18 +24,19 @@ TranslateTask(
 ) :
     Task.Backgroundable(project, title) {
 
-    private var translateHandler: TranslateHandler? = null
+    private var translator: Translator? = null
 
     override fun run(indicator: ProgressIndicator) {
-        translateHandler = TranslateHandler(
+        translator = AndroidXmlTranslator.translateForIntellij(
             resourceDir = resourceDir,
             documentReader = documentReader,
             form = form,
             to = to,
-            onTranslating = { index, language ->
+            onEachStart = { index, language ->
+                indicator.checkCanceled()
                 this.title = "正在翻译到第${index + 1}个语言${language.name}"
             },
-            onSuccess = { index, language ->
+            onEachSuccess = { index, language ->
                 val notificationGroup = NotificationGroup("翻译成功", NotificationDisplayType.BALLOON, true);
                 val notification = notificationGroup.createNotification(
                     "翻译第${index + 1}个语言${language.name}成功",
@@ -43,7 +44,7 @@ TranslateTask(
                 );
                 Notifications.Bus.notify(notification);
             },
-            onError = { index, language, error ->
+            onEachError = { index, language, error ->
                 val notificationGroup = NotificationGroup("翻译失败", NotificationDisplayType.BALLOON, true);
                 val notification = notificationGroup.createNotification(
                     "翻译第${index + 1}个语言${language.name}失败：${error.message}",
@@ -51,14 +52,18 @@ TranslateTask(
                 );
                 Notifications.Bus.notify(notification);
             }
-        ).apply {
-            start()
-        }
+        )
     }
 
     override fun onCancel() {
-        translateHandler?.cancel()
+        translator?.cancel()
         super.onCancel()
+        val notificationGroup = NotificationGroup("取消翻译", NotificationDisplayType.BALLOON, true);
+        val notification = notificationGroup.createNotification(
+            "您已取消翻译",
+            NotificationType.INFORMATION
+        );
+        Notifications.Bus.notify(notification);
     }
 
 }

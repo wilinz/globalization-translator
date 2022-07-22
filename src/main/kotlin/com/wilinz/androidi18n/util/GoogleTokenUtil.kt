@@ -6,7 +6,6 @@ package com.wilinz.androidi18n.util
 /**
  * 计算tk值.
  */
-@OptIn(ExperimentalUnsignedTypes::class)
 fun token(text: String): String {
     val a = text.toByteArray().map { it.toUByte().toShort() }
 

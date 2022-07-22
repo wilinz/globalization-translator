@@ -7,7 +7,7 @@ private const val GOOGLE_REFERER = "https://translate.google.com/"
 private const val CHROME_VERSION = "98.0.4758.102"
 private const val EDGE_VERSION = "98.0.1108.62"
 
-object GoogleHttp {
+object HttpData {
 
     @Suppress("SpellCheckingInspection")
     val userAgent: String

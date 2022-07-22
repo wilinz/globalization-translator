@@ -8,7 +8,7 @@ import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Request
 import org.json.JSONArray
 
-class GoogleTranslate : Translator {
+class GoogleTranslator : Translator {
 
     private val url = "https://translate.googleapis.com/translate_a/t?anno=3&client=te&v=1.0&format=html"
 
@@ -46,8 +46,6 @@ class GoogleTranslate : Translator {
                     (result as String).converseResult().removeCodeTag().unescapeAndroidXml()
                 }
             }
-        } catch (e: Exception) {
-            throw e
         } finally {
             callList.remove(call)
         }

@@ -23,6 +23,6 @@ class TranslateSelectedAction : AnAction() {
         val editor = e.getData(PlatformDataKeys.EDITOR) ?: return
         val selectedText = editor.selectionModel.selectedText ?: ""
         e.presentation.isEnabledAndVisible =
-            isStringsFile && selectedText.trim().matches(Regex("^<string[\\s\\S]*</string>$"))
+            isStringsFile && selectedText.trim().matches(Regex("^<.+[\\s\\S]*</.+>$"))
     }
 }

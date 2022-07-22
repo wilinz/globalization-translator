@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.wilinz.androidi18n</id>
-    <name>androidi18n</name>
-    <vendor email="weilizan71@gmail.com" url="http://weilizan.xyz">Wilinz</vendor>
+    <name>AndroidI18n</name>
+    <vendor email="weilizan71@gmail.com" url="https://github.com/wilinz/android-i18n-plugin">Wilinz</vendor>
 
     <description><![CDATA[
     Translate strings.xml file tool
@@ -17,30 +17,16 @@
         <!-- Add your actions here -->
         <action id="com.wilinz.androidi18n.action.TranslateAction"
                 class="com.wilinz.androidi18n.action.TranslateAction"
-                text="翻译文件"
+                text="Translate File"
                 icon="/icons/compose.svg">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
         <action id="com.wilinz.androidi18n.action.TranslateSelectedAction"
                 class="com.wilinz.androidi18n.action.TranslateSelectedAction"
-                text="翻译为其他语言"
+                text="Translate to Other Languages"
                 icon="/icons/compose.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </action>
     </actions>
-   <!-- <actions>
-        <action id="com.jetbrains.compose.action.TranslateAction"
-                class="com.jetbrains.compose.action.TranslateAction"
-                text="将字符串翻译成其他语言"
-                icon="/icons/compose.svg"
-                description="将字符串翻译成其他语言。">
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="EditSource"/>
-        </action>
-    </actions>-->
-    <extensions defaultExtensionNs="com.intellij">
-        <codeInsight.lineMarkerProvider language="kotlin" implementationClass="com.wilinz.androidi18n.ui.color.ColorLineMarkerProvider" />
-        <toolWindow id="Compose" anchor="right" secondary="false" factoryClass="com.wilinz.androidi18n.ui.panel.ComposeToolWindow"
-                    icon="/icons/compose.svg"/>
-    </extensions>
 
 </idea-plugin>

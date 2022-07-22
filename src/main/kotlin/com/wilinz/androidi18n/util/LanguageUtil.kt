@@ -23,9 +23,6 @@ object LanguageUtil {
             return _languages!!
         }
 
-    val languagesWithAuto: List<Language>
-        get() = languages
-
     private const val languagesJson = """[
   {
     "name": "阿尔巴尼亚语",
