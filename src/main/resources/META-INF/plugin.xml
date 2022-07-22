@@ -18,13 +18,13 @@
         <action id="com.wilinz.androidi18n.action.TranslateAction"
                 class="com.wilinz.androidi18n.action.TranslateAction"
                 text="Translate File"
-                icon="/icons/compose.svg">
+                icon="/icons/logo.svg">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
         <action id="com.wilinz.androidi18n.action.TranslateSelectedAction"
                 class="com.wilinz.androidi18n.action.TranslateSelectedAction"
                 text="Translate to Other Languages"
-                icon="/icons/compose.svg">
+                icon="/icons/logo.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </action>
     </actions>

@@ -58,14 +58,10 @@ class TranslateDialog(private val actionEvent: AnActionEvent, private val docume
         val language = Locale.getDefault().language
         val region = Locale.getDefault().country
         val localLanguageCode = "$language-$region"
-        println(localLanguageCode)
         sourceLanguage = mutableStateOf(
             LanguageUtil.languages.firstOrNull {
-                it.directoryName == file?.parent?.name
-            } ?: LanguageUtil.languages.firstOrNull {
-                localLanguageCode.contains(it.code)
-            }
-            ?: LanguageUtil.languages.first { it.code == "en" }
+                it.directoryName == file?.parent?.name || localLanguageCode.contains(it.code)
+            } ?: LanguageUtil.languages.first { it.code == "en" }
         )
 
         resourceDir = file?.parent?.parent ?: throw FileNotFoundException("resource dir is not found")
@@ -95,7 +91,6 @@ class TranslateDialog(private val actionEvent: AnActionEvent, private val docume
         ).queue()
     }
 
-    @OptIn(ExperimentalFoundationApi::class)
     override fun createCenterPanel(): JComponent {
         return ComposePanel().apply {
             setBounds(0, 0, 1000, 600)
