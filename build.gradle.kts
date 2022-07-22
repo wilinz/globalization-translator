@@ -25,7 +25,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
     implementation("com.google.code.gson:gson:2.9.0")
     testImplementation(kotlin("test"))
-    implementation( fileTree("libs"))
+    implementation(fileTree("libs"))
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
