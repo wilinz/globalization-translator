@@ -23,9 +23,7 @@ dependencies {
 //    compileOnly(compose.desktop.currentOs) runtime dependency is provided by org.jetbrains.compose.intellij.platform
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
-//    implementation("dom4j:dom4j:2.0.3")
     implementation("com.google.code.gson:gson:2.9.0")
-    implementation("org.json:json:20220320")
     testImplementation(kotlin("test"))
     implementation( fileTree("libs"))
 }

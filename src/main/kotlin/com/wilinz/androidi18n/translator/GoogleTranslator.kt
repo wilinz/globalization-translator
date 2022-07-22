@@ -1,12 +1,12 @@
 package com.wilinz.androidi18n.translator
 
+import com.google.gson.JsonParser
 import com.wilinz.androidi18n.network.OkHttp
 import com.wilinz.androidi18n.util.*
 import okhttp3.Call
 import okhttp3.FormBody
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Request
-import org.json.JSONArray
 
 class GoogleTranslator : Translator {
 
@@ -42,8 +42,8 @@ class GoogleTranslator : Translator {
         try {
             val response = call.execute()
             response.body?.string()?.let {
-                return JSONArray(it).map { result ->
-                    (result as String).converseResult().removeCodeTag().unescapeAndroidXml()
+                return JsonParser.parseString(it).asJsonArray.map { element ->
+                    element.asString.converseResult().removeCodeTag().unescapeAndroidXml()
                 }
             }
         } finally {
