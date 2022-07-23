@@ -17,6 +17,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.vfs.VirtualFile
+import com.wilinz.androidi18n.i18n.message
 import com.wilinz.androidi18n.task.TranslateTask
 import com.wilinz.androidi18n.ui.theme.WidgetTheme
 import com.wilinz.androidi18n.ui.util.jarPainterResource
@@ -33,7 +34,7 @@ data class LanguageItem(
     var checked: Boolean
 )
 
-class TranslateDialog(private val actionEvent: AnActionEvent, private val documentReader: Reader) :
+class TranslateDialog(private val dialogTitle:String,private val actionEvent: AnActionEvent, private val documentReader: Reader) :
     DialogWrapper(actionEvent.project) {
 
     private val existingDirList: List<String>
@@ -73,10 +74,10 @@ class TranslateDialog(private val actionEvent: AnActionEvent, private val docume
                 it.matches(regex)
             } ?: emptyList()
 
-        title = "翻译成其他语言"
+        title = dialogTitle
         init()
-        setOKButtonText("确定")
-        setCancelButtonText("取消")
+        setOKButtonText(message("ok"))
+        setCancelButtonText(message("cancel"))
     }
 
     override fun doOKAction() {
@@ -114,7 +115,7 @@ class TranslateDialog(private val actionEvent: AnActionEvent, private val docume
             Row(verticalAlignment = Alignment.CenterVertically) {
                 val menuExpanded = remember { mutableStateOf(false) }
 
-                Text("源语言：")
+                Text(message("source_language"))
                 Box {
                     TextButton(onClick = {
                         menuExpanded.value = !menuExpanded.value
@@ -147,7 +148,7 @@ class TranslateDialog(private val actionEvent: AnActionEvent, private val docume
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 val selectMode = remember { mutableStateOf(0) }
-                Text("目标语言：")
+                Text(message("target_language"))
                 CheckboxWithLabel(
                     checked = selectMode.value == 1,
                     onCheckedChange = {
@@ -155,7 +156,7 @@ class TranslateDialog(private val actionEvent: AnActionEvent, private val docume
                         selectMode.value = if (it) 1 else 0
                     },
                     label = {
-                        Text(text = "全选")
+                        Text(text = message("select_all"))
                     }
                 )
                 CheckboxWithLabel(
@@ -174,7 +175,7 @@ class TranslateDialog(private val actionEvent: AnActionEvent, private val docume
                         selectMode.value = if (it) 2 else 0
                     },
                     label = {
-                        Text(text = "选择未翻译的语言")
+                        Text(text = message("select_untranslated_language"))
                     }
                 )
             }

@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.PlatformDataKeys
+import com.wilinz.androidi18n.i18n.message
 import com.wilinz.androidi18n.ui.TranslateDialog
 import com.wilinz.androidi18n.util.isStringsFile
 import java.io.StringReader
@@ -13,11 +14,12 @@ class TranslateSelectedAction : AnAction() {
         val editor = e.getData(PlatformDataKeys.EDITOR) ?: return
         val selectedText = editor.selectionModel.selectedText
         val xml = "<resources>$selectedText</resources>"
-        TranslateDialog(e, StringReader(xml)).show()
+        TranslateDialog(message("translate_to_other_languages"), e, StringReader(xml)).show()
     }
 
     override fun update(e: AnActionEvent) {
         super.update(e)
+        e.presentation.text = message("translate_to_other_languages")
         val file = CommonDataKeys.VIRTUAL_FILE.getData(e.dataContext)
         val isStringsFile = file?.isStringsFile() ?: false
         val editor = e.getData(PlatformDataKeys.EDITOR) ?: return

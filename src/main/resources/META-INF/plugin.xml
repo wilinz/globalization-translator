@@ -3,6 +3,8 @@
     <name>AndroidI18n</name>
     <vendor email="weilizan71@gmail.com" url="https://github.com/wilinz/android-i18n-plugin">Wilinz</vendor>
 
+    <resource-bundle>messages.strings</resource-bundle>
+
     <description><![CDATA[
     Translate strings.xml file tool
     ]]></description>
@@ -17,13 +19,13 @@
         <!-- Add your actions here -->
         <action id="com.wilinz.androidi18n.action.TranslateAction"
                 class="com.wilinz.androidi18n.action.TranslateAction"
-                text="Translate File"
+                text="Translate This File"
                 icon="/icons/logo.svg">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
         <action id="com.wilinz.androidi18n.action.TranslateSelectedAction"
                 class="com.wilinz.androidi18n.action.TranslateSelectedAction"
-                text="Translate to Other Languages"
+                    text="Translate to Other Languages"
                 icon="/icons/logo.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </action>
