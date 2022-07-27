@@ -3,7 +3,8 @@ Intellij platform i18n plugin，Auto translate 133 languages for your applicatio
 
 This library is still under development and currently only supports translating Android.xml, which can preserve the placeholders such as ```%1$s```, ```%2$d``` and can Reserved escape characters like ```\n```,```\"```,```\'```, etc., support ```string```, ```string-array```, ```plurals``` tag.
 
-Buy me a coffee: https://github.com/wilinz/Sponsor
+#Support
+https://github.com/wilinz/Sponsor
 
 run :
 run command in terminal: `./gradlew runIde`
