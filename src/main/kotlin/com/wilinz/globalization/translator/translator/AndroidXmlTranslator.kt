@@ -58,7 +58,7 @@ object AndroidXmlTranslator {
                             val xmlWriter = XMLWriter(out, OutputFormat.createPrettyPrint()).apply {
                                 isEscapeText = false
                             }
-                            xmlWriter.write(newDocument.addCommentToTop())
+                            xmlWriter.write(newDocument.addCommentToTop(Commentary))
                         }
                     }
                 }
@@ -129,9 +129,9 @@ object AndroidXmlTranslator {
         }
     }
 
-    private fun Document.addCommentToTop(): Document {
+    private fun Document.addCommentToTop(vararg comment: String): Document {
         return DocumentHelper.createDocument().apply {
-            addComment(Commentary)
+            comment.forEach { addComment(it) }
             add(this@addCommentToTop.rootElement.createCopy())
         }
     }
