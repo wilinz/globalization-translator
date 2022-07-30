@@ -29,7 +29,12 @@ object PropertiesTranslator {
                 val childName = PropertiesUtil.getFilenameByBaseName(baseFilename, language)
                 return@translate resourceDir.findChild(childName)?.let {
                     it.inputStream.reader().use { input ->
-                        Properties.loadProperties(input)
+                        try {
+                            Properties.loadProperties(input)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            null
+                        }
                     }
                 }
             },
@@ -43,7 +48,7 @@ object PropertiesTranslator {
                     applicationManager.runWriteAction {
                         val file = resourceDir.findChild(filename) ?: resourceDir.createChildData(null, filename)
                         file.getOutputStream(null).use { out ->
-                            properties.store(out, isEncodeUnicode)
+                            properties.store(out, isEncodeUnicode, Commentary)
                         }
                     }
                 }

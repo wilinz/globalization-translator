@@ -35,7 +35,12 @@ object AndroidXmlTranslator {
                         ?: return@translate null
                 if (stringsFile.exists()) {
                     stringsFile.inputStream.use { input ->
-                        saxReader.read(input)
+                        try {
+                            saxReader.read(input)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            null
+                        }
                     }
                 } else null
             },
@@ -53,7 +58,7 @@ object AndroidXmlTranslator {
                             val xmlWriter = XMLWriter(out, OutputFormat.createPrettyPrint()).apply {
                                 isEscapeText = false
                             }
-                            xmlWriter.write(newDocument)
+                            xmlWriter.write(newDocument.addCommentToTop())
                         }
                     }
                 }
@@ -121,6 +126,13 @@ object AndroidXmlTranslator {
             } finally {
                 onEachFinish?.invoke()
             }
+        }
+    }
+
+    private fun Document.addCommentToTop(): Document {
+        return DocumentHelper.createDocument().apply {
+            addComment(Commentary)
+            add(this@addCommentToTop.rootElement.createCopy())
         }
     }
 
