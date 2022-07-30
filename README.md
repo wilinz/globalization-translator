@@ -5,6 +5,29 @@ This plugin supports translate Android.xml and java .properties file, which can 
 
 Advantages of this plugin compared to other plugins: fast translation speed, translate files into 131 languages in less than two minutes, support for retaining placeholders, support for incremental translation.
 
+<h3>Install</h3>
+
+Intellij platform -> Settings -> Plugins -> Marketplace -> Search "GlobalizationTranslator" -> Install
+
+Dependency：<a href="https://plugins.jetbrains.com/plugin/18439-compose-for-ide-plugin-development-experimental-">Compose for IDE Plugin Development (Experimental)</a>
+<h4>Download Dependency:</h4>
+
+<ul>
+    <li>
+        <h4>
+            Intellij Version >= 213:
+        </h4>
+        Settings -> Plugins -> Marketplace -> Search "Compose for IDE Plugin Development (Experimental)" -> Install
+    </li>
+    <li>
+        <h4>
+            Intellij Version < 213:
+        </h4>
+        <a href="https://github.com/wilinz/globalization-translator/releases/download/1.0.0/Compose_Intellij_Plugin_Base-0.1.0.zip">Click here Download</a>
+        -> Settings -> Plugins -> Click Settings Icon Button  -> Install Plugin form Disk
+    </li>
+</ul>
+
 <h2>Usage:</h2>
 <h3>1. Translate the entire document</h3>
 <ol>
