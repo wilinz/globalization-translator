@@ -7,7 +7,7 @@ Advantages of this plugin compared to other plugins: fast translation speed, tra
 
 <h3>Install</h3>
 
-Intellij platform -> Settings -> Plugins -> Marketplace -> Search "Compose for IDE Plugin Development (Experimental)" -> Install
+Intellij platform -> Settings -> Plugins -> Marketplace -> Search "GlobalizationTranslator" -> Install
 
 Dependency：<a href="https://plugins.jetbrains.com/plugin/18439-compose-for-ide-plugin-development-experimental-">Compose for IDE Plugin Development (Experimental)</a>
 <h4>Download Dependency:</h4>
