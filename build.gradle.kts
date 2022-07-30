@@ -1,5 +1,3 @@
-import org.jetbrains.compose.compose
-
 plugins {
     id("org.jetbrains.intellij") version "1.7.0"
     java
@@ -12,8 +10,6 @@ group = "com.wilinz.globalization"
 version = "1.0.0"
 
 repositories {
-    mavenCentral()
-    google()
     mavenCentral()
     maven { url = uri("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
     maven { url = uri("https://jitpack.io")}
@@ -51,7 +47,8 @@ tasks{
         kotlinOptions.jvmTarget = "11"
     }
     patchPluginXml {
-        sinceBuild.set("213")
-        untilBuild.set("252")
+        sinceBuild.set("203")
+        untilBuild.set("")
+        pluginDescription.set(projectDir.resolve("description.html").readText())
     }
 }
