@@ -7,6 +7,7 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.wilinz.globalization.translator.i18n.message
 import com.wilinz.globalization.translator.util.isStringsXmlFile
 import org.dom4j.io.SAXReader
+import java.io.StringReader
 
 class TranslateSelectedAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
@@ -18,7 +19,7 @@ class TranslateSelectedAction : AnAction() {
             e = e,
             file = file,
             getDocument = {
-                SAXReader().read(xml)
+                StringReader(xml).use { SAXReader().read(it) }
             },
         )
     }
