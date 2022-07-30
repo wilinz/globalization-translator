@@ -10,7 +10,7 @@ Advantages of this plugin compared to other plugins: fast translation speed, tra
 
 <h3>Install</h3>
 
-~~Intellij platform -> Settings -> Plugins -> Marketplace -> Search "GlobalizationTranslator" -> Install (Plugin is under review)~~
+~~Intellij platform -> Settings -> Plugins -> Marketplace -> Search "GlobalizationTranslator" -> Install~~ (Plugin is under review)
 
 Download from here: [release](https://github.com/wilinz/globalization-translator/releases) -> Settings -> Plugins -> Click Settings Icon Button  -> Install Plugin form Disk
 
