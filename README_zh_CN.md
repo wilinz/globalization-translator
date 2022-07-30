@@ -12,7 +12,7 @@ Intellij平台i18n插件，一键自动为您的应用翻译131种语言，支�
 
 ~~Intellij平台 -> 设置(Settings) -> 插件(Plugins) -> 市场(Marketplace) -> 搜索 "GlobalizationTranslator" -> 安装(Install)~~（插件正在审核中）
 
-从这里下载 GlobalizationTranslator-1.0.0.zip: [release](https://github.com/wilinz/globalization-translator/releases) -> 设置(Settings) -> 插件(Plugins) -> 单击设置按钮  -> 从磁盘安装插件(Install Plugin form Disk)
+从这里下载 GlobalizationTranslator.zip : [release](https://github.com/wilinz/globalization-translator/releases) -> 设置(Settings) -> 插件(Plugins) -> 单击设置按钮  -> 从磁盘安装插件(Install Plugin form Disk)
 
 依赖：<a href="https://plugins.jetbrains.com/plugin/18439-compose-for-ide-plugin-development-experimental-">Compose for IDE Plugin Development (Experimental)</a>
 <h4>下载依赖:</h4>
