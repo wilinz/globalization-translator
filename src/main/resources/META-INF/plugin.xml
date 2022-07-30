@@ -1,7 +1,7 @@
 <idea-plugin>
-    <id>com.wilinz.i18ntranslator</id>
-    <name>I18nTranslator</name>
-    <vendor email="weilizan71@gmail.com" url="https://github.com/wilinz/i18n-translator">Wilinz</vendor>
+    <id>com.wilinz.globalization.translator</id>
+    <name>GlobalizationTranslator</name>
+    <vendor email="weilizan71@gmail.com" url="https://github.com/wilinz/globalization-translator">Wilinz</vendor>
 
     <resource-bundle>messages.strings</resource-bundle>
     <resource-bundle>messages.languages</resource-bundle>
@@ -17,7 +17,7 @@
 <h3>Intellij platform i18n plugin，Generate 131 languages for your application with one click，Support Android strings.xml
     and java properties file</h3>
 <b>
-    <a href="https://github.com/wilinz/i18n-translator">GitHub</a>
+    <a href="https://github.com/wilinz/globalization-translator">GitHub</a>
 </b>
 <h4>Usage:</h4>
 <h5>1. Translate the entire document</h5>
@@ -43,30 +43,30 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.compose.intellij.platform</depends>
     <depends>org.jetbrains.kotlin</depends>
-<!--    <idea-version since-build="200"/>-->
+    <idea-version since-build="100"/>
 
     <actions>
         <!-- Add your actions here -->
-        <action id="com.wilinz.i18ntranslator.action.android.TranslateAction"
-                class="com.wilinz.i18ntranslator.action.android.TranslateAction"
+        <action id="com.wilinz.globalization.translator.action.android.TranslateAction"
+                class="com.wilinz.globalization.translator.action.android.TranslateAction"
                 text="Translate This File"
                 icon="/icons/logo.svg">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
-        <action id="com.wilinz.i18ntranslator.action.android.TranslateSelectedAction"
-                class="com.wilinz.i18ntranslator.action.android.TranslateSelectedAction"
+        <action id="com.wilinz.globalization.translator.action.android.TranslateSelectedAction"
+                class="com.wilinz.globalization.translator.action.android.TranslateSelectedAction"
                 text="Translate to Other Languages"
                 icon="/icons/logo.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </action>
-        <action id="com.wilinz.i18ntranslator.action.properties.TranslateAction"
-                class="com.wilinz.i18ntranslator.action.properties.TranslateAction"
+        <action id="com.wilinz.globalization.translator.action.properties.TranslateAction"
+                class="com.wilinz.globalization.translator.action.properties.TranslateAction"
                 text="Translate This File"
                 icon="/icons/logo.svg">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
-        <action id="com.wilinz.i18ntranslator.action.properties.TranslateSelectedAction"
-                class="com.wilinz.i18ntranslator.action.properties.TranslateSelectedAction"
+        <action id="com.wilinz.globalization.translator.action.properties.TranslateSelectedAction"
+                class="com.wilinz.globalization.translator.action.properties.TranslateSelectedAction"
                 text="Translate to Other Languages"
                 icon="/icons/logo.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>

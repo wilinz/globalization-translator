@@ -1,4 +1,4 @@
-rootProject.name = "ComposeDemoPlugin"
+rootProject.name = "GlobalizationTranslator"
 
 pluginManagement {
     plugins {
