@@ -2,6 +2,7 @@ package com.wilinz.globalization.translator.translator.engine
 
 import com.google.gson.JsonParser
 import com.wilinz.globalization.translator.network.OkHttp
+import com.wilinz.globalization.translator.printlnDebug
 import com.wilinz.globalization.translator.util.converseResult
 import okhttp3.Call
 import okhttp3.FormBody
@@ -41,9 +42,11 @@ class GoogleTranslator : Translator {
         try {
             val response = call.execute()
             response.body?.string()?.let {
-                return JsonParser.parseString(it).asJsonArray.map { element ->
+                val result = JsonParser.parseString(it).asJsonArray.map { element ->
                     element.asString.converseResult()
                 }
+                printlnDebug(result)
+                return result
             }
         } finally {
             callList.remove(call)

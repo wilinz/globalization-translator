@@ -4,7 +4,7 @@ import com.intellij.openapi.vfs.VirtualFile
 
 private val isStringsFileRegex = Regex("^strings.xml$|^plurals.xml$|^arrays.xml$")
 private val converseResultRegex = Regex("<b>(.*?)</b>")
-private val converseResultRegex1 = Regex("<i>.*?</b>")
+private val converseResultRegex1 = Regex("^<i>.*</b>$")
 internal fun VirtualFile.isStringsXmlFile(): Boolean {
     val parent = this.parent ?: return false
     if (!parent.name.matches(Regex("^values.*$"))) return false
@@ -46,7 +46,7 @@ fun String.unescapeHTML(): String {
 
 internal fun String.converseResult(): String {
     if (converseResultRegex1.matches(this)) {
-        return converseResultRegex.findAll(this).joinToString(". ")
+        return converseResultRegex.findAll(this).mapNotNull { it.groups.getOrNull(1)?.value }.joinToString(" ")
     }
     return this
 }

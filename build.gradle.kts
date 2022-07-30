@@ -8,8 +8,8 @@ plugins {
     id("idea")
 }
 
-group = "org.jetbrains.compose.intellij.platform"
-version = "1.0-SNAPSHOT"
+group = "com.wilinz.globalization"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -42,6 +42,16 @@ intellij {
     )
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+tasks{
+    withType<JavaCompile> {
+        sourceCompatibility = "9"
+        targetCompatibility = "11"
+    }
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions.jvmTarget = "11"
+    }
+    patchPluginXml {
+        sinceBuild.set("172")
+        untilBuild.set("252")
+    }
 }

@@ -11,6 +11,7 @@ import org.dom4j.io.SAXReader
 import org.dom4j.io.XMLWriter
 import org.junit.Test
 import java.io.File
+import java.io.StringReader
 
 class Test {
 
@@ -24,7 +25,7 @@ class Test {
     fun testAndroidXmlTranslator() {
         val saxReader = SAXReader()
         val document =
-            saxReader.read(File(""))//Enter your strings.xml file path
+            saxReader.read(StringReader("<r><string name=\"crash_feedback\">将会自动提交错误信息。您也可以手动复制调试信息提交给开发者(*^▽^*)或者点击\\\"退出\\\"退出程序o(╥﹏╥)o</string></r>"))
         AndroidXmlTranslator.translate(
             translator = GoogleTranslator(),
             oldDocument = document,
@@ -50,12 +51,6 @@ class Test {
                 properties.store(System.out,false)
             }
         )
-    }
-
-    @Test
-    fun test1() {
-        val result = message("translate_file",'a')
-        println(result)
     }
 
 }

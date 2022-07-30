@@ -43,7 +43,7 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.compose.intellij.platform</depends>
     <depends>org.jetbrains.kotlin</depends>
-    <idea-version since-build="100"/>
+<!--    <idea-version since-build="100"/>-->
 
     <actions>
         <!-- Add your actions here -->

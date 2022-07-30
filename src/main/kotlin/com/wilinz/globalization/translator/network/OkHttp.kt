@@ -1,5 +1,6 @@
 package com.wilinz.globalization.translator.network
 
+import com.wilinz.globalization.translator.isDebug
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.time.Duration
@@ -8,7 +9,7 @@ object OkHttp {
     private val logging = HttpLoggingInterceptor()
 
     init {
-        logging.setLevel(HttpLoggingInterceptor.Level.NONE);
+        logging.setLevel(if (isDebug) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE);
     }
 
     val client = OkHttpClient.Builder()
