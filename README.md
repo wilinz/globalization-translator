@@ -1,7 +1,7 @@
 # I18n-translator-plugin
-Intellij platform i18n plugin，Auto translate 133 languages for your application with one click，Support Android strings.xml and java properties file
+Intellij platform i18n plugin，Auto translate 133 languages for your application with one click，Support Android strings.xml and java .properties file
 
-This library is still under development and currently only supports translating Android.xml, which can preserve the placeholders such as ```%1$s```, ```%2$d``` and can Reserved escape characters like ```\n```,```\"```,```\'```, etc., support ```string```, ```string-array```, ```plurals``` tag.
+This library supports translate Android.xml and java .properties file, which can preserve the placeholders such as ```%1$s```, ```%2$d``` and can Reserved escape characters like ```\n```,```\"```,```\'```, etc., support ```string```, ```string-array```, ```plurals``` tag.
 
 # Support
 https://github.com/wilinz/Sponsor
