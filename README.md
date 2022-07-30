@@ -47,7 +47,7 @@ Dependency：<a href="https://plugins.jetbrains.com/plugin/18439-compose-for-ide
 # Support
 https://github.com/wilinz/Sponsor
 
-# Run plugin
+# Develop：
 Run command in terminal: `./gradlew runIde`
 <img src="img/20220417014525.png"   />
 <img src="img/20220417014733.png"  />
