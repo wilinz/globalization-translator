@@ -32,7 +32,7 @@ Dependency：<a href="https://plugins.jetbrains.com/plugin/18439-compose-for-ide
     </li>
     <li>
         <h4>
-            Intellij Version < 213:
+            Intellij version ＜ 213:
         </h4>
         <a href="https://github.com/wilinz/globalization-translator/releases/download/1.0.0/Compose_Intellij_Plugin_Base-0.1.0.zip">Click here Download</a>
         -> Settings -> Plugins -> Click Settings Icon Button  -> Install Plugin form Disk
