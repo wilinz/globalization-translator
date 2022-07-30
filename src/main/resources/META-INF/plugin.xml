@@ -18,8 +18,26 @@
     Intellij platform i18n plugin，Generate 131 languages for your application with one click，Support Android strings.xml
     and java properties file
 </h3>
-<b>Dependencies：<a href="https://plugins.jetbrains.com/plugin/18439-compose-for-ide-plugin-development-experimental-">Compose for IDE Plugin Development (Experimental)</a></b>
-<br>
+
+<h3>Install</h3>
+Dependency：<a href="https://plugins.jetbrains.com/plugin/18439-compose-for-ide-plugin-development-experimental-">Compose for IDE Plugin Development (Experimental)</a>
+<h4>Download:</h4>
+
+<ul>
+    <li>
+        <h4>
+            Intellij Version >= 213:
+        </h4>
+        Settings -> Plugins -> Marketplace -> Search "Compose for IDE Plugin Development (Experimental)" -> Install
+    </li>
+    <li>
+        <h4>
+            Intellij Version < 213:
+        </h4>
+        <a href="https://github.com/wilinz/globalization-translator/releases/download/1.0.0/Compose_Intellij_Plugin_Base-0.1.0.zip">Click here Download</a>
+        -> Settings -> Plugins -> Click Settings Icon Button  -> Install Plugin form Disk
+    </li>
+</ul>
 <b>
     More information: <a href="https://github.com/wilinz/globalization-translator">GitHub</a>
 </b>
