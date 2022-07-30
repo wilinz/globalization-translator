@@ -111,4 +111,9 @@ Dependency：<a href="https://plugins.jetbrains.com/plugin/18439-compose-for-ide
         </action>
     </actions>
 
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="Globalization Translator Notification" displayType="BALLOON" isLogByDefault="true"/>
+        <notificationGroup id="Globalization Translator Notification Sticky" displayType="STICKY_BALLOON" isLogByDefault="true"/>
+    </extensions>
+
 </idea-plugin>

@@ -17,7 +17,7 @@ class PropertiesTranslateTask(
     private val form: String,
     private val to: List<String>,
     title: @NlsContexts.ProgressTitle String
-) : TranslateTask(project, form, to, title) {
+) : TranslateTask(project, title) {
     override fun run(indicator: ProgressIndicator) {
         translator = GoogleTranslator()
         PropertiesTranslator.translateForIntellij(
@@ -38,5 +38,6 @@ class PropertiesTranslateTask(
                 onEachError(index, language, error)
             }
         )
+        onComplete()
     }
 }

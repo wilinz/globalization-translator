@@ -16,7 +16,7 @@ class AndroidTranslateTask(
     private val form: String,
     private val to: List<String>,
     title: @NlsContexts.ProgressTitle String
-) : TranslateTask(project, form, to, title) {
+) : TranslateTask(project, title) {
 
     override fun run(indicator: ProgressIndicator) {
         translator = GoogleTranslator()
@@ -37,6 +37,7 @@ class AndroidTranslateTask(
                 onEachError(index, language, error)
             }
         )
+        onComplete()
     }
 
 }

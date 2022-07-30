@@ -18,7 +18,7 @@ class TranslateSelectedAction : AnAction() {
             e = e,
             file = file,
             getProperties = {
-                StringReader(selectedText).use { Properties.loadProperties(it) }
+                StringReader(selectedText.trim()).use { Properties.loadProperties(it) }
             },
         )
 
