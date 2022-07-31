@@ -1,6 +1,5 @@
 package com.wilinz.globalization.translator
 
-import com.wilinz.globalization.translator.i18n.message
 import com.wilinz.globalization.translator.language.LanguageUtil
 import com.wilinz.globalization.translator.translator.AndroidXmlTranslator
 import com.wilinz.globalization.translator.translator.PropertiesTranslator

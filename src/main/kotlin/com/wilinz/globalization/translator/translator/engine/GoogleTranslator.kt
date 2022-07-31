@@ -4,6 +4,7 @@ import com.google.gson.JsonParser
 import com.wilinz.globalization.translator.network.OkHttp
 import com.wilinz.globalization.translator.printlnDebug
 import com.wilinz.globalization.translator.util.converseResult
+import com.wilinz.globalization.translator.util.firstUppercase
 import okhttp3.Call
 import okhttp3.FormBody
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -43,7 +44,7 @@ class GoogleTranslator : Translator {
             val response = call.execute()
             response.body?.string()?.let {
                 val result = JsonParser.parseString(it).asJsonArray.map { element ->
-                    element.asString.converseResult()
+                    element.asString.converseResult().firstUppercase()
                 }
                 printlnDebug(result)
                 return result

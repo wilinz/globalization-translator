@@ -51,6 +51,11 @@ internal fun String.converseResult(): String {
     return this
 }
 
+fun String.firstUppercase(): String {
+    if (this.isEmpty()) return this
+    return this[0].uppercase() + this.substring(1)
+}
+
 fun MatchGroupCollection.getOrNull(index: Int): MatchGroup? {
     if (this.size > index) {
         return this[index]
