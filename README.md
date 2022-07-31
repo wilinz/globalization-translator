@@ -49,6 +49,10 @@ Dependency：<a href="https://plugins.jetbrains.com/plugin/18439-compose-for-ide
     <li>Click OK.</li>
 </ol>
 
+# Announcement
+
+Be careful to choose the source language correctly, otherwise the translation may not be accurate
+
 1.For Android strings.xml please add translatable="false" for strings not to be translated:
 ```xml
 <string name="test" translatable="false">Test</string>
