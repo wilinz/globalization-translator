@@ -49,11 +49,11 @@ Dependency：<a href="https://plugins.jetbrains.com/plugin/18439-compose-for-ide
     <li>Click OK.</li>
 </ol>
 
-1.For Android strings.xml Please add translatable="false" for strings not to be translated:
+1.For Android strings.xml please add translatable="false" for strings not to be translated:
 ```xml
 <string name="test" translatable="false">Test</string>
 ```
-2.For .properties file，Please store untranslated strings and translated strings in separate files
+2.For .properties file，please store untranslated strings and translated strings in separate files
 
 # Support
 https://github.com/wilinz/Sponsor
