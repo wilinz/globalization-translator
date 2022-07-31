@@ -49,6 +49,10 @@ Intellij平台i18n插件，一键自动为您的应用翻译131种语言，支�
     <li>单击确定。</li>
 </ol>
 
+# 注意
+
+请注意正确选择源语言，否则翻译可能不太准确
+
 1.对于 Android strings.xml , 不翻译的字符串请加 translatable="false", 
 如 
 ```xml
