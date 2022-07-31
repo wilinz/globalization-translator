@@ -15,6 +15,7 @@ class TranslateAction : AnAction() {
             getProperties = { charset ->
                 file.inputStream.use { Properties.loadProperties(it.reader(charset)) }
             },
+            isShowOverwriteCheckBox = true
         )
     }
 

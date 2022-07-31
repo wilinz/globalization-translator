@@ -15,6 +15,7 @@ class AndroidTranslateTask(
     private val document: Document,
     private val form: String,
     private val to: List<String>,
+    private val isOverwriteTargetFile: Boolean,
     title: @NlsContexts.ProgressTitle String
 ) : TranslateTask(project, title) {
 
@@ -27,6 +28,7 @@ class AndroidTranslateTask(
             document = document,
             form = form,
             to = to,
+            isOverwriteTargetFile = isOverwriteTargetFile,
             onEachStart = { index, language ->
                 onEachStart(indicator, index, language)
             },

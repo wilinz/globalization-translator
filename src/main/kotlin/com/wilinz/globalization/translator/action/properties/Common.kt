@@ -12,7 +12,8 @@ import java.nio.charset.Charset
 internal fun propertiesActionPerformed(
     e: AnActionEvent,
     file: VirtualFile,
-    getProperties: (charset: Charset) -> Properties
+    getProperties: (charset: Charset) -> Properties,
+    isShowOverwriteCheckBox: Boolean = false
 ) {
     val basename = PropertiesUtil.getBaseName(file.name) ?: return
     val resourceDir = file.parent
@@ -21,18 +22,20 @@ internal fun propertiesActionPerformed(
     propertiesTranslateDialog(
         project = e.project,
         title = message("translate_this_file"),
-        onOKClick = { sourceLanguage, targetLanguages, isEncodeUnicode, charset ->
+        onOKClick = { config ->
             PropertiesTranslateTask(
                 project = e.project,
                 baseFilename = basename,
-                isEncodeUnicode = isEncodeUnicode,
+                isEncodeUnicode = config.isEncodeUnicode,
                 resourceDir = resourceDir,
-                properties = getProperties(charset),
-                form = sourceLanguage,
-                to = targetLanguages,
+                properties = getProperties(config.charset),
+                form = config.sourceLanguage,
+                to = config.targetLanguages,
+                isOverwriteTargetFile = config.isOverwriteTargetFile,
                 title = message("translate_file", file.name)
             ).queue()
         },
-        file = file
+        file = file,
+        isShowOverwriteCheckBox = isShowOverwriteCheckBox
     ).show()
 }

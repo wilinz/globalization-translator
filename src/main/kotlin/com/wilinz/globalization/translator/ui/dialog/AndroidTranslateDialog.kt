@@ -8,7 +8,8 @@ fun androidTranslateDialog(
     project: Project?,
     title: String,
     file: VirtualFile,
-    onOKClick: (sourceLanguage: String, targetLanguages: List<String>) -> Unit,
+    onOKClick: (config: TranslationConfig) -> Unit,
+    isShowOverwriteCheckBox: Boolean = false
 ): TranslateDialog {
 
     val defaultSourceLanguage =
@@ -25,6 +26,7 @@ fun androidTranslateDialog(
         title,
         defaultSourceLanguage,
         onOKClick,
-        translatedLanguages
+        translatedLanguages,
+        isShowOverwriteCheckBox
     )
 }

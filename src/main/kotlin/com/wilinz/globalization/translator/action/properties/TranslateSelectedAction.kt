@@ -20,6 +20,7 @@ class TranslateSelectedAction : AnAction() {
             getProperties = {
                 StringReader(selectedText.trim()).use { Properties.loadProperties(it) }
             },
+            isShowOverwriteCheckBox = false
         )
 
     }

@@ -16,6 +16,7 @@ class PropertiesTranslateTask(
     private val properties: Properties,
     private val form: String,
     private val to: List<String>,
+    private val isOverwriteTargetFile: Boolean,
     title: @NlsContexts.ProgressTitle String
 ) : TranslateTask(project, title) {
     override fun run(indicator: ProgressIndicator) {
@@ -28,6 +29,7 @@ class PropertiesTranslateTask(
             properties = properties,
             form = form,
             to = to,
+            isOverwriteTargetFile = isOverwriteTargetFile,
             onEachStart = { index, language ->
                 onEachStart(indicator, index, language)
             },

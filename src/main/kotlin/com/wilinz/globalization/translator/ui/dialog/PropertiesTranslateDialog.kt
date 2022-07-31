@@ -20,73 +20,46 @@ import com.wilinz.globalization.translator.util.PropertiesUtil
 import java.nio.charset.Charset
 import javax.swing.JComponent
 
+class PropertiesTranslateConfig(
+    sourceLanguage: String,
+    targetLanguages: List<String>,
+    val isEncodeUnicode: Boolean,
+    val charset: Charset,
+    isOverwriteTargetFile: Boolean
+) : TranslationConfig(sourceLanguage, targetLanguages, isOverwriteTargetFile)
+
 class PropertiesTranslateDialog(
     project: Project?,
     title: String,
     defaultSourceLanguage: String = "en",
-    private val onOKClick: (sourceLanguage: String, targetLanguages: List<String>, isEncodeUnicode: Boolean, sourceFileFormat: Charset) -> Unit,
+    isShowOverwriteCheckBox: Boolean,
+    private val onOKClick: (config: PropertiesTranslateConfig) -> Unit,
     private val translatedLanguages: List<String> = listOf()
-) : TranslateDialog(project, title, defaultSourceLanguage, null, translatedLanguages) {
+) : TranslateDialog(project, title, defaultSourceLanguage, null, translatedLanguages, isShowOverwriteCheckBox) {
 
     private var isEncodeUnicode by mutableStateOf(false)
     private var fileFormat by mutableStateOf(Charsets.UTF_8.name())
 
     init {
-        super.setOnOKClickListener { sourceLanguage, targetLanguages ->
-            onOKClick(sourceLanguage, targetLanguages, isEncodeUnicode, charset(fileFormat))
+        super.setOnOKClickListener { config ->
+            onOKClick(
+                PropertiesTranslateConfig(
+                    sourceLanguage = config.sourceLanguage,
+                    targetLanguages = config.targetLanguages,
+                    isOverwriteTargetFile = config.isOverwriteTargetFile,
+                    isEncodeUnicode = isEncodeUnicode,
+                    charset = charset(fileFormat)
+                )
+            )
         }
     }
 
     override fun createCenterPanel(): JComponent {
-        return ComposePanel().apply {
-            setBounds(0, 0, 1000, 600)
-            setContent {
-                WidgetTheme(darkTheme = true) {
-                    Surface(modifier = Modifier.fillMaxSize()) {
-                        Box(modifier = Modifier.padding(8.dp)) {
-                            PropertiesDialogContent(
-                                fileFormat = fileFormat,
-                                onFileFormatChange = { fileFormat = it },
-                                isEncodeUnicode = isEncodeUnicode,
-                                onIsEncodeUnicodeChange = { isEncodeUnicode = it },
-                                sourceLanguage = sourceLanguage,
-                                isTranslated = { language ->
-                                    translatedLanguages.indexOf(language) != -1
-                                },
-                                onSourceLanguageChange = {
-                                    sourceLanguage = it
-                                },
-                                targetLanguages = targetLanguages
-                            )
-                        }
-                    }
-                }
-            }
+        return setCenterPanel {
+            SourceFileFormat(format = fileFormat, onFormatChange = { fileFormat = it })
+            EncodeUnicodeCkeckBox(isEncodeUnicode = isEncodeUnicode, onIsEncodeUnicodeChange = { isEncodeUnicode = it })
         }
     }
-
-    @Composable
-    private fun PropertiesDialogContent(
-        fileFormat: String,
-        onFileFormatChange: (language: String) -> Unit,
-        isEncodeUnicode: Boolean,
-        onIsEncodeUnicodeChange: (Boolean) -> Unit,
-        sourceLanguage: String,
-        onSourceLanguageChange: (language: String) -> Unit,
-        targetLanguages: SnapshotStateList<LanguageItem>,
-        isTranslated: (language: String) -> Boolean
-    ) {
-        Column {
-            SourceFileFormat(fileFormat, onFileFormatChange)
-            SourceLanguage(sourceLanguage, onSourceLanguageChange)
-            Row {
-                TargetLanguage(targetLanguages, isTranslated)
-                EncodeUnicodeCkeckBox(isEncodeUnicode, onIsEncodeUnicodeChange)
-            }
-            LanguageList(targetLanguages)
-        }
-    }
-
 
     @Composable
     private fun EncodeUnicodeCkeckBox(
@@ -149,7 +122,8 @@ fun propertiesTranslateDialog(
     project: Project?,
     title: String,
     file: VirtualFile,
-    onOKClick: (sourceLanguage: String, targetLanguages: List<String>, isEncodeUnicode: Boolean, sourceFileFormat: Charset) -> Unit,
+    onOKClick: (config: PropertiesTranslateConfig) -> Unit,
+    isShowOverwriteCheckBox: Boolean = false,
 ): PropertiesTranslateDialog {
     val defaultSourceLanguage =
         file.name.let { PropertiesUtil.getLanguageByName(it) }
@@ -162,10 +136,11 @@ fun propertiesTranslateDialog(
         ?: emptyList()
 
     return PropertiesTranslateDialog(
-        project,
-        title,
-        defaultSourceLanguage,
-        onOKClick,
-        translatedLanguages
+        project = project,
+        title = title,
+        defaultSourceLanguage = defaultSourceLanguage,
+        isShowOverwriteCheckBox = isShowOverwriteCheckBox,
+        onOKClick = onOKClick,
+        translatedLanguages = translatedLanguages,
     )
 }

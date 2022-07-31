@@ -18,6 +18,7 @@ object PropertiesTranslator {
         properties: Properties,
         form: String,
         to: List<String>,
+        isOverwriteTargetFile: Boolean,
         onEachStart: ((index: Int, language: String) -> Unit)? = null,
         onEachSuccess: ((index: Int, language: String) -> Unit)? = null,
         onEachError: ((index: Int, language: String, error: Throwable) -> Unit)? = null,
@@ -26,6 +27,7 @@ object PropertiesTranslator {
             translator = translator,
             oldProperties = properties,
             newPropertiesFetcher = { _, language ->
+                if (isOverwriteTargetFile) return@translate null
                 val childName = PropertiesUtil.getFilenameByBaseName(baseFilename, language)
                 return@translate resourceDir.findChild(childName)?.let {
                     it.inputStream.reader().use { input ->

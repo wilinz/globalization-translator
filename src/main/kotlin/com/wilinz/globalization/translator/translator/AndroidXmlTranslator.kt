@@ -21,6 +21,7 @@ object AndroidXmlTranslator {
         document: Document,
         form: String,
         to: List<String>,
+        isOverwriteTargetFile: Boolean,
         onEachStart: ((index: Int, language: String) -> Unit)? = null,
         onEachSuccess: ((index: Int, language: String) -> Unit)? = null,
         onEachError: ((index: Int, language: String, error: Throwable) -> Unit)? = null,
@@ -30,6 +31,7 @@ object AndroidXmlTranslator {
             translator = translator,
             oldDocument = document,
             newDocumentFetcher = { index, language ->
+                if (isOverwriteTargetFile) return@translate null
                 val stringsFile =
                     resourceDir.findChild(LanguageUtil.androidLanguageDirMap[language]!!)?.findChild(filename)
                         ?: return@translate null

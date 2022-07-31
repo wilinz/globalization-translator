@@ -16,6 +16,7 @@ class TranslateAction : AnAction() {
             getDocument = {
                 file.inputStream.use { SAXReader().read(it) }
             },
+            isShowOverwriteCheckBox = true
         )
     }
 

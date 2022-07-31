@@ -44,7 +44,7 @@ class GoogleTranslator : Translator {
             val response = call.execute()
             response.body?.string()?.let {
                 val result = JsonParser.parseString(it).asJsonArray.map { element ->
-                    element.asString.converseResult().firstUppercase()
+                    element.asString.converseResult().firstUppercase().trim()
                 }
                 printlnDebug(result)
                 return result

@@ -31,15 +31,23 @@ data class LanguageItem(
     var checked: Boolean
 )
 
+open class TranslationConfig(
+    val sourceLanguage: String,
+    val targetLanguages: List<String>,
+    val isOverwriteTargetFile: Boolean
+)
+
 open class TranslateDialog(
     project: Project?,
     title: String,
     defaultSourceLanguage: String = "en",
-    private var onOKClick: ((sourceLanguage: String, targetLanguages: List<String>) -> Unit)? = null,
+    private var onOKClick: ((config: TranslationConfig) -> Unit)? = null,
     private val translatedLanguages: List<String> = listOf(),
+    private val isShowOverwriteCheckBox: Boolean = false
 ) :
     DialogWrapper(project) {
 
+    protected var isOverwriteTargetFile by mutableStateOf(false)
     protected var sourceLanguage by mutableStateOf(defaultSourceLanguage)
     protected val targetLanguages = mutableStateListOf<LanguageItem>().apply {
         addAll(
@@ -51,7 +59,7 @@ open class TranslateDialog(
             })
     }
 
-    fun setOnOKClickListener(onOKClick: ((sourceLanguage: String, targetLanguages: List<String>) -> Unit)) {
+    fun setOnOKClickListener(onOKClick: ((config: TranslationConfig) -> Unit)) {
         this.onOKClick = onOKClick
     }
 
@@ -64,10 +72,18 @@ open class TranslateDialog(
 
     override fun doOKAction() {
         super.doOKAction()
-        onOKClick?.invoke(sourceLanguage, targetLanguages.filter { it.checked }.map { it.language })
+        onOKClick?.invoke(
+            TranslationConfig(
+                sourceLanguage = sourceLanguage,
+                targetLanguages = targetLanguages.filter { it.checked }.map { it.language },
+                isOverwriteTargetFile = isOverwriteTargetFile
+            )
+        )
     }
 
-    override fun createCenterPanel(): JComponent {
+    override fun createCenterPanel(): JComponent = setCenterPanel()
+
+    protected fun setCenterPanel(options: @Composable (RowScope.() -> Unit)? = null): ComposePanel {
         return ComposePanel().apply {
             setBounds(0, 0, 1000, 600)
             setContent {
@@ -75,6 +91,7 @@ open class TranslateDialog(
                     Surface(modifier = Modifier.fillMaxSize()) {
                         Box(modifier = Modifier.padding(8.dp)) {
                             DialogContent(
+                                options = options,
                                 sourceLanguage = sourceLanguage,
                                 isTranslated = { language ->
                                     translatedLanguages.indexOf(language) != -1
@@ -82,7 +99,9 @@ open class TranslateDialog(
                                 onSourceLanguageChange = {
                                     sourceLanguage = it
                                 },
-                                targetLanguages = targetLanguages
+                                targetLanguages = targetLanguages,
+                                isOverwrite = isOverwriteTargetFile,
+                                onIsOverwriteChange = { isOverwriteTargetFile = it }
                             )
                         }
                     }
@@ -92,21 +111,46 @@ open class TranslateDialog(
     }
 
     @Composable
-    protected fun DialogContent(
+    private fun DialogContent(
+        options: @Composable (RowScope.() -> Unit)? = null,
         sourceLanguage: String,
         onSourceLanguageChange: (language: String) -> Unit,
         targetLanguages: SnapshotStateList<LanguageItem>,
-        isTranslated: (language: String) -> Boolean
+        isTranslated: (language: String) -> Boolean,
+        isOverwrite: Boolean,
+        onIsOverwriteChange: (Boolean) -> Unit
     ) {
         Column {
-            SourceLanguage(sourceLanguage, onSourceLanguageChange)
-            TargetLanguage(targetLanguages, isTranslated)
+            if (isShowOverwriteCheckBox || options != null) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(message("option"))
+                    if (isShowOverwriteCheckBox) OverwriteTargetFileCheckBox(isOverwrite, onIsOverwriteChange)
+                    options?.invoke(this)
+                }
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                SourceLanguage(sourceLanguage, onSourceLanguageChange)
+                TargetLanguage(targetLanguages, isTranslated)
+            }
             LanguageList(targetLanguages)
         }
     }
 
     @Composable
-    protected fun TargetLanguage(
+    private fun OverwriteTargetFileCheckBox(isOverwrite: Boolean, onIsOverwriteChange: (Boolean) -> Unit) {
+        CheckboxWithLabel(
+            checked = isOverwrite,
+            onCheckedChange = {
+                onIsOverwriteChange(it)
+            },
+            label = {
+                Text(text = message("is_overwrite_target_file"))
+            }
+        )
+    }
+
+    @Composable
+    private fun TargetLanguage(
         targetLanguages: SnapshotStateList<LanguageItem>,
         isTranslated: (language: String) -> Boolean
     ) {
@@ -144,9 +188,11 @@ open class TranslateDialog(
 
     @Composable
     @OptIn(ExperimentalFoundationApi::class)
-    protected fun LanguageList(targetLanguages: SnapshotStateList<LanguageItem>) {
-        Box(modifier = Modifier.fillMaxSize()
-            .padding(10.dp)) {
+    private fun LanguageList(targetLanguages: SnapshotStateList<LanguageItem>) {
+        Box(
+            modifier = Modifier.fillMaxSize()
+                .padding(10.dp)
+        ) {
             val state = rememberLazyListState()
             LazyVerticalGrid(GridCells.Adaptive(150.dp), state = state) {
                 itemsIndexed(targetLanguages) { index, item ->
@@ -170,7 +216,7 @@ open class TranslateDialog(
     }
 
     @Composable
-    protected fun SourceLanguage(
+    private fun SourceLanguage(
         sourceLanguage: String,
         onSourceLanguageChange: (language: String) -> Unit
     ) {

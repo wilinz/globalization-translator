@@ -21,6 +21,7 @@ class TranslateSelectedAction : AnAction() {
             getDocument = {
                 StringReader(xml).use { SAXReader().read(it) }
             },
+            isShowOverwriteCheckBox = false
         )
     }
 
