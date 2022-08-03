@@ -10,7 +10,9 @@ Intellij平台i18n插件，一键自动为您的应用翻译131种语言，支�
 
 <h2>安装</h2>
 
-~~Intellij平台 -> 设置(Settings) -> 插件(Plugins) -> 市场(Marketplace) -> 搜索 "GlobalizationTranslator" -> 安装(Install)~~（插件正在审核中）
+Intellij平台 -> 设置(Settings) -> 插件(Plugins) -> 市场(Marketplace) -> 搜索 "GlobalizationTranslator" -> 安装(Install)
+
+或者
 
 从这里下载 GlobalizationTranslator.zip : [release](https://github.com/wilinz/globalization-translator/releases) -> 设置(Settings) -> 插件(Plugins) -> 单击设置按钮  -> 从磁盘安装插件(Install Plugin form Disk)
 
