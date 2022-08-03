@@ -1,3 +1,7 @@
+import org.commonmark.renderer.html.HtmlRenderer
+import org.commonmark.parser.Parser as MarkdownParser
+import java.io.Reader
+
 plugins {
     id("org.jetbrains.intellij") version "1.7.0"
     java
@@ -12,10 +16,19 @@ version = "1.0.1"
 repositories {
     mavenCentral()
     maven { url = uri("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
-    maven { url = uri("https://jitpack.io")}
+    maven { url = uri("https://jitpack.io") }
 }
 
-configurations.all { exclude ("xml-apis","xml-apis") }
+configurations.all { exclude("xml-apis", "xml-apis") }
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.commonmark:commonmark:0.18.1")
+    }
+}
 
 dependencies {
 //    compileOnly(compose.desktop.currentOs) runtime dependency is provided by org.jetbrains.compose.intellij.platform
@@ -38,7 +51,7 @@ intellij {
     )
 }
 
-tasks{
+tasks {
     withType<JavaCompile> {
         sourceCompatibility = "9"
         targetCompatibility = "11"
@@ -49,6 +62,19 @@ tasks{
     patchPluginXml {
         sinceBuild.set("203")
         untilBuild.set("")
-        pluginDescription.set(projectDir.resolve("description.html").readText())
+        pluginDescription.set(getDescription("README.md"))
     }
+}
+
+fun getDescription(relative: String): String {
+    return projectDir.resolve(relative).reader().use {
+        markdownToHtml(it)
+    }
+}
+
+fun markdownToHtml(reader: Reader): String {
+    val parser = MarkdownParser.builder().build()
+    val document = parser.parseReader(reader)
+    val renderer = HtmlRenderer.builder().build()
+    return renderer.render(document)
 }

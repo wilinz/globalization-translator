@@ -1,6 +1,6 @@
 # GlobalizationTranslator
 
-[简体中文文档](README_zh_CN.md)
+[简体中文文档](https://github.com/wilinz/globalization-translator/blob/main/README_zh_CN.md)
 
 Intellij platform i18n plugin，Auto translate 131 languages for your application with one click，Support Android strings.xml and java .properties file
 
@@ -10,19 +10,15 @@ Advantages of this plugin compared to other plugins: fast translation speed, tra
 
 ## Install
 
-Intellij platform -> Settings -> Plugins -> Marketplace -> Search "GlobalizationTranslator" -> Install  
-or  
-Download GlobalizationTranslator.zip from [here](https://github.com/wilinz/globalization-translator/releases) -> Settings -> Plugins -> Click Settings Icon Button  -> Install Plugin form Disk
-
 Dependency：Compose for IDE Plugin Development (Experimental)
 
 ### Download Dependency:
 
 1. **_Intellij Version >= 213:_**  
-   Settings -> Plugins -> Marketplace -> Search "Compose for IDE Plugin Development (Experimental)" -> Install
+Marketplace -> Search "Compose for IDE Plugin Development (Experimental)" -> Install
 2. **_Intellij Version < 213:_**  
-   [Click Here Download](https://github.com/wilinz/globalization-translator/releases/download/1.0.0/Compose_Intellij_Plugin_Base-0.1.0.zip)
-   -> Settings -> Plugins -> Click Settings Icon Button  -> Install Plugin form Disk
+[Click Here Download](https://github.com/wilinz/globalization-translator/releases/download/1.0.0/Compose_Intellij_Plugin_Base-0.1.0.zip)
+-> Settings -> Plugins -> Click Settings Icon Button  -> Install Plugin form Disk
 
 ## Usage
 1. Translate the entire document
@@ -64,11 +60,3 @@ Be careful to choose the source language correctly, otherwise the translation ma
 
 ## Support
 [https://github.com/wilinz/Sponsor](https://github.com/wilinz/Sponsor)
-
-## Develop
-Run command in terminal: `./gradlew runIde`
-
-## Screenshot
-<img src="img/20220417014525.png"   />
-<img src="img/20220417014733.png"  />
-<img src="img/20220417014758.png"   />
