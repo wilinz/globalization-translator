@@ -31,7 +31,7 @@ internal fun propertiesActionPerformed(
                 properties = getProperties(config.charset),
                 form = config.sourceLanguage,
                 to = config.targetLanguages,
-                isOverwriteTargetFile = config.isOverwriteTargetFile,
+                isOverwriteTargetFile = if (isShowOverwriteCheckBox) config.isOverwriteTargetFile else false,
                 title = message("translate_file", file.name)
             ).queue()
         },

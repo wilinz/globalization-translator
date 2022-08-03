@@ -10,7 +10,7 @@
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.compose.intellij.platform</depends>
-<!--    <depends>org.jetbrains.kotlin</depends>-->
+    <depends>org.jetbrains.kotlin</depends>
 
     <actions>
         <!-- Add your actions here -->

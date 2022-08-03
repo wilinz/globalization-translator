@@ -13,12 +13,16 @@ object AndroidUtil {
         return this.replace("\\\"", "&quot;")
             .replace("\\'", "&#39;")
             .replace(">", "&gt;")
+            .replace("<", "&lt;")
     }
 
     internal fun String.unescapeAndroidXml(): String {
-        return this.replace("&quot;", "\\\"")
+        return this.replace("\"", "\\\"")
+            .replace("'", "\\'")
+            .replace("&quot;", "\\\"")
             .replace("&#39;", "\\'")
             .replace("&gt;", ">")
+            .replace("<", "&lt;")
     }
 
 
