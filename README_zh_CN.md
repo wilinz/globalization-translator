@@ -55,7 +55,7 @@ Intellij平台i18n插件，一键自动为您的应用翻译131种语言，支�
 然后编辑 build.gradle , 在 sourceSets/main 下面加入 res.srcDirs += "src/main/res-i18n", 其中 res-i18n 是刚才新建文件夹的名称
 ```gradle
 android {
-    ...
+    //...
     sourceSets {
         main {
             res.srcDirs += "src/main/res-i18n"
