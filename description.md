@@ -2,6 +2,9 @@
 
 [简体中文文档](https://github.com/wilinz/globalization-translator/blob/main/README_zh_CN.md)
 
+More information：[Github](https://github.com/wilinz/globalization-translator)  
+Issues report: [Issues](https://github.com/wilinz/globalization-translator/issues)
+
 Intellij platform i18n plugin，Auto translate 131 languages for your application with one click，Support Android strings.xml and java .properties file
 
 This plugin supports translate Android.xml and java .properties file, which can preserve the placeholders such as ```%1$s```, ```%2$d```, ```{0}```,```{1}``` and can Reserved escape characters like ```\n```,```\"```,```\'```, etc., support ```string```, ```string-array```, ```plurals``` tag.
@@ -58,5 +61,5 @@ Be careful to choose the source language correctly, otherwise the translation ma
 ```
 2.For .properties file，please store untranslated strings and translated strings in separate files
 
-## Support
+## Sponsor
 [https://github.com/wilinz/Sponsor](https://github.com/wilinz/Sponsor)

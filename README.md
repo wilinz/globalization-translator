@@ -16,7 +16,7 @@ Download GlobalizationTranslator.zip from [here](https://github.com/wilinz/globa
 
 Dependency：Compose for IDE Plugin Development (Experimental)
 
-### Download Dependency:
+### Download Dependency
 
 1. **_Intellij Version >= 213:_**  
    Settings -> Plugins -> Marketplace -> Search "Compose for IDE Plugin Development (Experimental)" -> Install
@@ -62,7 +62,7 @@ Be careful to choose the source language correctly, otherwise the translation ma
 ```
 2.For .properties file，please store untranslated strings and translated strings in separate files
 
-## Support
+## Sponsor
 [https://github.com/wilinz/Sponsor](https://github.com/wilinz/Sponsor)
 
 ## Develop

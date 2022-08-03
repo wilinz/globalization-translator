@@ -62,7 +62,7 @@ tasks {
     patchPluginXml {
         sinceBuild.set("203")
         untilBuild.set("")
-        pluginDescription.set(getDescription("README.md"))
+        pluginDescription.set(getDescription("description.md"))
     }
 }
 

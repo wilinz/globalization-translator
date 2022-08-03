@@ -16,7 +16,7 @@ Intellij平台 -> 设置(Settings) -> 插件(Plugins) -> 市场(Marketplace) -> 
 
 依赖：Compose for IDE Plugin Development (Experimental)
 
-### 下载依赖：
+### 下载依赖
 
 1. **_Intellij 版本 >= 213:_**  
    设置(Settings) -> 插件(Plugins) -> 市场(Marketplace) -> 搜索 "Compose for IDE Plugin Development (Experimental)" -> 安装(Install)
@@ -65,9 +65,10 @@ android {
 ## 支持
 [https://github.com/wilinz/Sponsor](https://github.com/wilinz/Sponsor)
 
-## 开发：
+## 开发
 在终端运行命令运行插件: `./gradlew runIde`
 
+## 截图
 <img src="img/20220417014525.png"   />
 <img src="img/20220417014733.png"  />
 <img src="img/20220417014758.png"   />
