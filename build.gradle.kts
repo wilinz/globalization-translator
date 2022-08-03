@@ -1,4 +1,5 @@
 import org.commonmark.renderer.html.HtmlRenderer
+import org.jetbrains.changelog.date
 import org.commonmark.parser.Parser as MarkdownParser
 import java.io.Reader
 
@@ -8,10 +9,11 @@ plugins {
     kotlin("jvm")
     id("org.jetbrains.compose")
     id("idea")
+    id("org.jetbrains.changelog") version "1.3.1"
 }
 
 group = "com.wilinz.globalization"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     mavenCentral()
@@ -63,6 +65,7 @@ tasks {
         sinceBuild.set("203")
         untilBuild.set("")
         pluginDescription.set(getDescription("description.md"))
+        changeNotes.set(provider { changelog.getLatest().toHTML() })
     }
 }
 
@@ -77,4 +80,14 @@ fun markdownToHtml(reader: Reader): String {
     val document = parser.parseReader(reader)
     val renderer = HtmlRenderer.builder().build()
     return renderer.render(document)
+}
+
+changelog {
+    version.set(project.version.toString())
+    path.set("${project.projectDir}/CHANGELOG.md")
+    header.set(provider { "[${version.get()}] - ${date()}" })
+    itemPrefix.set("-")
+    keepUnreleasedSection.set(true)
+    unreleasedTerm.set("[Unreleased]")
+    groups.set(listOf("Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"))
 }
