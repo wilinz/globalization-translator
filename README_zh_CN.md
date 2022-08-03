@@ -8,7 +8,7 @@ Intellij平台i18n插件，一键自动为您的应用翻译131种语言，支�
 
 本插件相对于其他插件的优势：翻译速度快，不到两分钟将文件翻译成131种语言，支持保留占位符，支持增量翻译。
 
-<h3>安装</h3>
+<h2>安装</h2>
 
 ~~Intellij平台 -> 设置(Settings) -> 插件(Plugins) -> 市场(Marketplace) -> 搜索 "GlobalizationTranslator" -> 安装(Install)~~（插件正在审核中）
 
@@ -49,8 +49,22 @@ Intellij平台i18n插件，一键自动为您的应用翻译131种语言，支�
     <li>单击确定。</li>
 </ol>
 
-# 注意
+## 技巧
+翻译 Android strings.xml 后，会生成很多个 values-** 文件夹，导致非常混乱，这时我们可以在 app/main 目录下新建一个文件夹，随意命名，如 res-i18n ,
+然后新建 values 目录，再把之前 res/value/strings.xml 拷贝到 values 目录下
+然后编辑 build.gradle , 在 sourceSets/main 下面加入 res.srcDirs += "src/main/res-i18n", 其中 res-i18n 是刚才新建文件夹的名称
+```gradle
+android {
+    ...
+    sourceSets {
+        main {
+            res.srcDirs += "src/main/res-i18n"
+        }
+    }
+}
+```
 
+## 注意
 请注意正确选择源语言，否则翻译可能不太准确
 
 1.对于 Android strings.xml , 不翻译的字符串请加 translatable="false", 
@@ -60,10 +74,10 @@ Intellij平台i18n插件，一键自动为您的应用翻译131种语言，支�
 ```
 2.对于.properties 文件，不翻译的字符串和翻译的字符串请分文件存放
 
-# 支持
+## 支持
 https://github.com/wilinz/Sponsor
 
-# 开发：
+## 开发：
 在终端运行命令运行插件: `./gradlew runIde`
 
 <img src="img/20220417014525.png"   />
