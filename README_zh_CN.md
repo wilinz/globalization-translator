@@ -18,9 +18,9 @@ Intellij平台 -> 设置(Settings) -> 插件(Plugins) -> 市场(Marketplace) -> 
 
 ### 下载依赖
 
-1. **_Intellij 版本 >= 213:_**  
-   设置(Settings) -> 插件(Plugins) -> 市场(Marketplace) -> 搜索 "Compose for IDE Plugin Development (Experimental)" -> 安装(Install)
-2. **_Intellij 版本 < 213:_**  
+~~1. **_Intellij 版本 >= 213:_**~~  
+   ~~设置(Settings) -> 插件(Plugins) -> 市场(Marketplace) -> 搜索 "Compose for IDE Plugin Development (Experimental)" -> 安装(Install)~~
+~~2. **_Intellij 版本 < 213:_**~~  
    [点击这里下载依赖库](https://github.com/wilinz/globalization-translator/releases/download/1.0.0/Compose_Intellij_Plugin_Base-0.1.0.zip)
    -> 设置(Settings) -> 插件(Plugins) -> 单击设置按钮  -> 从磁盘安装插件(Install Plugin form Disk)
 

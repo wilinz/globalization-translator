@@ -18,9 +18,9 @@ Dependency：Compose for IDE Plugin Development (Experimental)
 
 ### Download Dependency
 
-1. **_Intellij Version >= 213:_**  
-   Settings -> Plugins -> Marketplace -> Search "Compose for IDE Plugin Development (Experimental)" -> Install
-2. **_Intellij Version < 213:_**  
+~~1. **_Intellij Version >= 213:_**~~  
+   ~~Settings -> Plugins -> Marketplace -> Search "Compose for IDE Plugin Development (Experimental)" -> Install~~
+~~2. **_Intellij Version < 213:_**~~  
    [Click Here Download](https://github.com/wilinz/globalization-translator/releases/download/1.0.0/Compose_Intellij_Plugin_Base-0.1.0.zip)
    -> Settings -> Plugins -> Click Settings Icon Button  -> Install Plugin form Disk
 
