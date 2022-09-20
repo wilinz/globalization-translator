@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.wilinz.globalization"
-version = "1.0.2"
+version = "1.0.3"
 
 repositories {
     mavenCentral()
@@ -62,7 +62,7 @@ tasks {
         kotlinOptions.jvmTarget = "11"
     }
     patchPluginXml {
-        sinceBuild.set("203")
+        sinceBuild.set("172")
         untilBuild.set("")
         pluginDescription.set(getDescription("description.md"))
         changeNotes.set(provider { changelog.getLatest().toHTML() })
