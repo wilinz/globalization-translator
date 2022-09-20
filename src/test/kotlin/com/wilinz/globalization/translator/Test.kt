@@ -16,7 +16,7 @@ class Test {
 
     @Test
     fun testGoogleTranslator() {
-        val result = GoogleTranslator().translate(listOf("albanian"), "en", "kok")
+        val result = GoogleTranslator().translate(listOf("تحويل الإخراج إلى Ascii (يمكن إلغاء تحديد Java 9 وما فوق)"), "auto", "en")
         println(result)
     }
 
