@@ -26,9 +26,7 @@ internal fun androidActionPerformed(
                 filename = file.name,
                 resourceDir = resourceDir,
                 document = getDocument(),
-                form = config.sourceLanguage,
-                to = config.targetLanguages,
-                isOverwriteTargetFile = if (isShowOverwriteCheckBox) config.isOverwriteTargetFile else false,
+                config = config,
                 title = message("translate_file", file.name)
             ).queue()
         },

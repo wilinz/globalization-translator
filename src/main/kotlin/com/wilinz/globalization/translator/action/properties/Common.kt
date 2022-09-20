@@ -29,9 +29,7 @@ internal fun propertiesActionPerformed(
                 isEncodeUnicode = config.isEncodeUnicode,
                 resourceDir = resourceDir,
                 properties = getProperties(config.charset),
-                form = config.sourceLanguage,
-                to = config.targetLanguages,
-                isOverwriteTargetFile = if (isShowOverwriteCheckBox) config.isOverwriteTargetFile else false,
+                config = config,
                 title = message("translate_file", file.name)
             ).queue()
         },

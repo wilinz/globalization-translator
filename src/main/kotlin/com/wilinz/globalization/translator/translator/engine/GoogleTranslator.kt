@@ -10,7 +10,7 @@ import okhttp3.FormBody
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Request
 
-class GoogleTranslator : Translator {
+class GoogleTranslator(var isFirstUppercase: Boolean = true) : Translator {
 
     private val url = "https://translate.googleapis.com/translate_a/t?anno=3&client=te&v=1.0&format=html"
 
@@ -44,7 +44,11 @@ class GoogleTranslator : Translator {
             val response = call.execute()
             response.body?.string()?.let {
                 val result = JsonParser.parseString(it).asJsonArray.map { element ->
-                    element.asString.converseResult().firstUppercase().trim()
+                    var result = element.asString.converseResult()
+                    if (isFirstUppercase) {
+                        result = result.firstUppercase()
+                    }
+                    result.trim()
                 }
                 printlnDebug(result)
                 return result

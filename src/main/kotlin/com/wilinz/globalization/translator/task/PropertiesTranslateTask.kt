@@ -6,6 +6,7 @@ import com.intellij.openapi.util.NlsContexts
 import com.intellij.openapi.vfs.VirtualFile
 import com.wilinz.globalization.translator.translator.PropertiesTranslator
 import com.wilinz.globalization.translator.translator.engine.GoogleTranslator
+import com.wilinz.globalization.translator.ui.dialog.TranslationConfig
 import org.codejive.properties.Properties
 
 class PropertiesTranslateTask(
@@ -14,22 +15,20 @@ class PropertiesTranslateTask(
     private val isEncodeUnicode: Boolean,
     private val resourceDir: VirtualFile,
     private val properties: Properties,
-    private val form: String,
-    private val to: List<String>,
-    private val isOverwriteTargetFile: Boolean,
+    private val config: TranslationConfig,
     title: @NlsContexts.ProgressTitle String
 ) : TranslateTask(project, title) {
     override fun run(indicator: ProgressIndicator) {
-        translator = GoogleTranslator()
+        translator = GoogleTranslator(config.isFirstUppercase)
         PropertiesTranslator.translateForIntellij(
             translator = translator!!,
             baseFilename = baseFilename,
             isEncodeUnicode = isEncodeUnicode,
             resourceDir = resourceDir,
             properties = properties,
-            form = form,
-            to = to,
-            isOverwriteTargetFile = isOverwriteTargetFile,
+            form = config.sourceLanguage,
+            to = config.targetLanguages,
+            isOverwriteTargetFile = config.isOverwriteTargetFile,
             onEachStart = { index, language ->
                 onEachStart(indicator, index, language)
             },

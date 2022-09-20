@@ -6,6 +6,7 @@ import com.intellij.openapi.util.NlsContexts
 import com.intellij.openapi.vfs.VirtualFile
 import com.wilinz.globalization.translator.translator.AndroidXmlTranslator
 import com.wilinz.globalization.translator.translator.engine.GoogleTranslator
+import com.wilinz.globalization.translator.ui.dialog.TranslationConfig
 import org.dom4j.Document
 
 class AndroidTranslateTask(
@@ -13,22 +14,20 @@ class AndroidTranslateTask(
     private val filename: String,
     private val resourceDir: VirtualFile,
     private val document: Document,
-    private val form: String,
-    private val to: List<String>,
-    private val isOverwriteTargetFile: Boolean,
+    private val config: TranslationConfig,
     title: @NlsContexts.ProgressTitle String
 ) : TranslateTask(project, title) {
 
     override fun run(indicator: ProgressIndicator) {
-        translator = GoogleTranslator()
+        translator = GoogleTranslator(config.isFirstUppercase)
         AndroidXmlTranslator.translateForIntellij(
             translator = translator!!,
             filename = filename,
             resourceDir = resourceDir,
             document = document,
-            form = form,
-            to = to,
-            isOverwriteTargetFile = isOverwriteTargetFile,
+            form = config.sourceLanguage,
+            to = config.targetLanguages,
+            isOverwriteTargetFile = config.isOverwriteTargetFile,
             onEachStart = { index, language ->
                 onEachStart(indicator, index, language)
             },

@@ -34,7 +34,8 @@ data class LanguageItem(
 open class TranslationConfig(
     val sourceLanguage: String,
     val targetLanguages: List<String>,
-    val isOverwriteTargetFile: Boolean
+    val isOverwriteTargetFile: Boolean,
+    val isFirstUppercase: Boolean
 )
 
 open class TranslateDialog(
@@ -48,6 +49,7 @@ open class TranslateDialog(
     DialogWrapper(project) {
 
     protected var isOverwriteTargetFile by mutableStateOf(false)
+    protected var isFirstUppercase by mutableStateOf(true)
     protected var sourceLanguage by mutableStateOf(defaultSourceLanguage)
     protected val targetLanguages = mutableStateListOf<LanguageItem>().apply {
         addAll(
@@ -76,7 +78,8 @@ open class TranslateDialog(
             TranslationConfig(
                 sourceLanguage = sourceLanguage,
                 targetLanguages = targetLanguages.filter { it.checked }.map { it.language },
-                isOverwriteTargetFile = isOverwriteTargetFile
+                isOverwriteTargetFile = isOverwriteTargetFile,
+                isFirstUppercase = isFirstUppercase
             )
         )
     }
@@ -101,7 +104,9 @@ open class TranslateDialog(
                                 },
                                 targetLanguages = targetLanguages,
                                 isOverwrite = isOverwriteTargetFile,
-                                onIsOverwriteChange = { isOverwriteTargetFile = it }
+                                onIsOverwriteChange = { isOverwriteTargetFile = it },
+                                isFirstUppercase = isFirstUppercase,
+                                onIsFirstUppercaseChange = { isFirstUppercase = it }
                             )
                         }
                     }
@@ -118,15 +123,16 @@ open class TranslateDialog(
         targetLanguages: SnapshotStateList<LanguageItem>,
         isTranslated: (language: String) -> Boolean,
         isOverwrite: Boolean,
-        onIsOverwriteChange: (Boolean) -> Unit
+        onIsOverwriteChange: (Boolean) -> Unit,
+        isFirstUppercase: Boolean,
+        onIsFirstUppercaseChange: (Boolean) -> Unit
     ) {
         Column {
-            if (isShowOverwriteCheckBox || options != null) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(message("option"))
-                    if (isShowOverwriteCheckBox) OverwriteTargetFileCheckBox(isOverwrite, onIsOverwriteChange)
-                    options?.invoke(this)
-                }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(message("option"))
+                FirstUppercaseCheckBox(isFirstUppercase, onIsFirstUppercaseChange)
+                if (isShowOverwriteCheckBox) OverwriteTargetFileCheckBox(isOverwrite, onIsOverwriteChange)
+                options?.invoke(this)
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 SourceLanguage(sourceLanguage, onSourceLanguageChange)
@@ -134,6 +140,19 @@ open class TranslateDialog(
             }
             LanguageList(targetLanguages)
         }
+    }
+
+    @Composable
+    private fun FirstUppercaseCheckBox(isFirstUppercase: Boolean, onIsFirstUppercaseChange: (Boolean) -> Unit) {
+        CheckboxWithLabel(
+            checked = isFirstUppercase,
+            onCheckedChange = {
+                onIsFirstUppercaseChange(it)
+            },
+            label = {
+                Text(text = message("is_first_uppercase"))
+            }
+        )
     }
 
     @Composable

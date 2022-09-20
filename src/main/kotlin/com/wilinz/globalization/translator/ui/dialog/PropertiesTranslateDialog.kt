@@ -25,8 +25,9 @@ class PropertiesTranslateConfig(
     targetLanguages: List<String>,
     val isEncodeUnicode: Boolean,
     val charset: Charset,
-    isOverwriteTargetFile: Boolean
-) : TranslationConfig(sourceLanguage, targetLanguages, isOverwriteTargetFile)
+    isOverwriteTargetFile: Boolean,
+    isFirstUppercase: Boolean
+) : TranslationConfig(sourceLanguage, targetLanguages, isOverwriteTargetFile, isFirstUppercase)
 
 class PropertiesTranslateDialog(
     project: Project?,
@@ -48,7 +49,8 @@ class PropertiesTranslateDialog(
                     targetLanguages = config.targetLanguages,
                     isOverwriteTargetFile = config.isOverwriteTargetFile,
                     isEncodeUnicode = isEncodeUnicode,
-                    charset = charset(fileFormat)
+                    charset = charset(fileFormat),
+                    isFirstUppercase = isFirstUppercase
                 )
             )
         }
