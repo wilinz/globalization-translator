@@ -1,3 +1,4 @@
+import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension
 import org.commonmark.renderer.html.HtmlRenderer
 import org.jetbrains.changelog.date
 import org.commonmark.parser.Parser as MarkdownParser
@@ -29,6 +30,8 @@ buildscript {
     }
     dependencies {
         classpath("org.commonmark:commonmark:0.18.1")
+        // https://mavenlibs.com/maven/dependency/com.atlassian.commonmark/commonmark-ext-gfm-strikethrough
+        classpath("com.atlassian.commonmark:commonmark-ext-gfm-strikethrough:0.17.0")
     }
 }
 
@@ -62,7 +65,7 @@ tasks {
         kotlinOptions.jvmTarget = "11"
     }
     patchPluginXml {
-        sinceBuild.set("172")
+        sinceBuild.set("203")
         untilBuild.set("")
         pluginDescription.set(getDescription("description.md"))
         changeNotes.set(provider { changelog.getLatest().toHTML() })
@@ -76,7 +79,9 @@ fun getDescription(relative: String): String {
 }
 
 fun markdownToHtml(reader: Reader): String {
-    val parser = MarkdownParser.builder().build()
+    val parser = MarkdownParser.builder()
+        .extensions(listOf(StrikethroughExtension.create()))
+        .build()
     val document = parser.parseReader(reader)
     val renderer = HtmlRenderer.builder().build()
     return renderer.render(document)
