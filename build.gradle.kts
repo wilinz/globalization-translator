@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "com.wilinz.globalization"
-version = "1.0.3"
+version = "1.0.4"
 
 repositories {
     mavenCentral()
